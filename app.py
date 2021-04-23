@@ -9,7 +9,16 @@ import plotly.express as px
 ########### Define your variables
 tabtitle='SERF: Parameter Space Testing'
 
+
 #### Import Fit Data
+##v1
+ALL_data_fit_values = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/Full_fit_Data.csv')
+#V2
+ALL_data_fit_values_v2 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/Full_fit_Data_V2.csv')
+#V3
+ALL_data_fit_values_v3 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/M-LOOP/Full_fit_Data_V3.csv')
+#V4
+ALL_data_fit_values_v4 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/M-LOOP/Full_fit_Data_V4.csv')
 # 04-03-21 MLOOP-166-loop
 ALL_data_fit_values_v5 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/04-03-21-Full_fit_Data.csv')
 # 08-03-21 GA-50-sample
@@ -29,6 +38,17 @@ ALL_data_fit_values_v13 = pd.read_csv('https://raw.githubusercontent.com/rach623
 ALL_data_fit_values_v14 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/21-04-21-Full_fit_Data.csv')
 
 # Create col of A/C:
+ALL_data_fit_values["V/nT"] =  abs(ALL_data_fit_values['A'])/abs(ALL_data_fit_values['G2'])
+ALL_data_fit_values["SE"] =  abs(ALL_data_fit_values['G2'])-abs(ALL_data_fit_values['G1'])
+#V2
+ALL_data_fit_values_v2["V/nT"] =  abs(ALL_data_fit_values_v2['A'])/abs(ALL_data_fit_values_v2['G2'])
+ALL_data_fit_values_v2["SE"] =  abs(ALL_data_fit_values_v2['G2'])-abs(ALL_data_fit_values_v2['G1'])
+#V3
+ALL_data_fit_values_v3["V/nT"] =  abs(ALL_data_fit_values_v3['A'])/abs(ALL_data_fit_values_v3['G2'])
+ALL_data_fit_values_v3["SE"] =  abs(ALL_data_fit_values_v3['G2'])-abs(ALL_data_fit_values_v3['G1'])
+#V4
+ALL_data_fit_values_v4["V/nT"] =  abs(ALL_data_fit_values_v4['A'])/abs(ALL_data_fit_values_v4['G2'])
+ALL_data_fit_values_v4["SE"] =  abs(ALL_data_fit_values_v4['G2'])-abs(ALL_data_fit_values_v4['G1'])
 # 04-03-21 MLOOP-166-loop
 ALL_data_fit_values_v5["V/nT"] =  abs(ALL_data_fit_values_v5['A'])/abs(ALL_data_fit_values_v5['G2'])
 ALL_data_fit_values_v5["SE"] =  abs(ALL_data_fit_values_v5['G2'])-abs(ALL_data_fit_values_v5['G1'])
@@ -56,7 +76,8 @@ ALL_data_fit_values_v14["V/nT"] =  abs(ALL_data_fit_values_v14['A(1D)'])/abs(ALL
 # list of all data frames
 all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, ALL_data_fit_values_v8,
         ALL_data_fit_values_v9, ALL_data_fit_values_v10, ALL_data_fit_values_v11, ALL_data_fit_values_v12, 
-        ALL_data_fit_values_v13,ALL_data_fit_values_v14]    
+        ALL_data_fit_values_v13,ALL_data_fit_values_v14, ALL_data_fit_values, ALL_data_fit_values_v2, ALL_data_fit_values_v3,
+        ALL_data_fit_values_v4]    
   
 
 ## Load data for sliders/ tables
@@ -64,6 +85,13 @@ df = ALL_data_fit_values_v5
 D1Ddf = ALL_data_fit_values_v11
 
 # File names
+Github_urls_v1= pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/Data_pt2/Github_urls_sorted.csv")
+#v2
+Github_urls_v2 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/Version_2_Data_1/Github_urls_sortedV2.csv")
+#v3
+Github_urls_v3 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/M-LOOP/Github_urls_sortedV3.csv")
+#v4
+Github_urls_v4 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/M-LOOP/Github_urls_sortedV4.csv")
 # 04-03-21 MLOOP-166-loop
 Github_urls_v5 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/04-03-21-Github_urls_sorted.csv")
 # 08-03-21 GA-50-sample
@@ -85,7 +113,8 @@ Github_urls_v14 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_a
     
 # list of all data frames
 all_git_df=[Github_urls_v5, Github_urls_v6, Github_urls_v7, Github_urls_v8,Github_urls_v9,
-            Github_urls_v10, Github_urls_v11, Github_urls_v12, Github_urls_v13, Github_urls_v14]    
+            Github_urls_v10, Github_urls_v11, Github_urls_v12, Github_urls_v13, Github_urls_v14,
+            Github_urls_v1, Github_urls_v2, Github_urls_v3, Github_urls_v4]    
 
 
 # Inital data to show (selected point)
@@ -149,16 +178,20 @@ app.layout = html.Div(children=[
                         dcc.Dropdown(
                             id='segselect',
                             options=[
-                                {'label': 'M-LOOP (166 Loop, 04-03-21)', 'value': 0},
-                                {'label': 'GA (50 sample, 08-03-21)', 'value': 1},
-                                {'label': 'M-LOOP (500 sample, 12-03-21)', 'value': 2},
-                                {'label': 'GA (200 sample, 14-03-21)', 'value': 3},  
-                                {'label': 'Gradient (189 sample, 15-03-21)', 'value':4},    
-                                {'label': 'Systematic (512 sample, 02-04-21)', 'value': 5}, 
-                                {'label': 'GA (500 sample, 10-04-21)', 'value':7}, 
-                                {'label': 'Gradient (492 sample, 11-04-21)', 'value':6}, 
-                                {'label': 'GA (500 sample, 19-04-21)', 'value':8}, 
-                                {'label': 'GA (500 sample, 21-04-21)', 'value':9},
+                                {'label': 'V1: Systematic Testing V1', 'value': 10},
+                                {'label': 'V1: Systematic Testing V2', 'value': 11},
+                                {'label': 'V1: M-LOOP V1', 'value': 12},
+                                {'label': 'V1: M-LOOP V2', 'value': 13},                            
+                                {'label': 'V2: M-LOOP (166 Loop, 04-03-21)', 'value': 0},
+                                {'label': 'V2: GA (50 sample, 08-03-21)', 'value': 1},
+                                {'label': 'V2: M-LOOP (500 sample, 12-03-21)', 'value': 2},
+                                {'label': 'V2: GA (200 sample, 14-03-21)', 'value': 3},  
+                                {'label': 'V2: Gradient (189 sample, 15-03-21)', 'value':4},    
+                                {'label': 'V2: Systematic (512 sample, 02-04-21)', 'value': 5}, 
+                                {'label': 'V2: GA (500 sample, 10-04-21)', 'value':7}, 
+                                {'label': 'V2: Gradient (492 sample, 11-04-21)', 'value':6}, 
+                                {'label': 'V2: GA (500 sample, 19-04-21)', 'value':8}, 
+                                {'label': 'V2: GA (500 sample, 21-04-21)', 'value':9},
                             ],
                             value=2
                         ), 
@@ -270,7 +303,7 @@ app.layout = html.Div(children=[
 @app.callback(Output('HanleScanType', 'children'),
               Input('segselect', 'value'))
 def update_figure(data_version):
-  if data_version == 0 or data_version == 1 or data_version ==2 or data_version ==3 or data_version == 4 or data_version ==5:        
+  if data_version == 0 or data_version == 1 or data_version ==2 or data_version ==3 or data_version == 4 or data_version ==5 or data_version == 10 or data_version == 11 or data_version == 12 or data_version == 13 :        
     A = 'Scan Type = 3D'
   if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9:  
     A = 'Scan Type = 2D/1D'
@@ -1536,6 +1569,5 @@ def display_click_data(clickData2, clickData, data_version, scan_type):
         fig.update_layout(height=150)
         fig.update_layout(font=dict(size=8)) # Change font size
         return fig  
-
 if __name__ == '__main__':
     app.run_server()
