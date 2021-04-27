@@ -10,6 +10,7 @@ import plotly.express as px
 tabtitle='SERF: Parameter Space Testing'
 
 
+
 #### Import Fit Data
 ##v1
 ALL_data_fit_values = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/Full_fit_Data.csv')
@@ -36,6 +37,7 @@ ALL_data_fit_values_v11 = pd.read_csv('https://raw.githubusercontent.com/rach623
 ALL_data_fit_values_v12 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/10-04-21-Full_fit_Data.csv')
 ALL_data_fit_values_v13 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/19-04-21-Full_fit_Data.csv')
 ALL_data_fit_values_v14 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/21-04-21-Full_fit_Data.csv')
+ALL_data_fit_values_v15 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/26-04-21-Full_fit_Data.csv')
 
 # Create col of A/C:
 ALL_data_fit_values["V/nT"] =  abs(ALL_data_fit_values['A'])/abs(ALL_data_fit_values['G2'])
@@ -72,12 +74,13 @@ ALL_data_fit_values_v11["V/nT"] =  abs(ALL_data_fit_values_v11['A(1D)'])/abs(ALL
 ALL_data_fit_values_v12["V/nT"] =  abs(ALL_data_fit_values_v12['A(1D)'])/abs(ALL_data_fit_values_v12['G(1D)'])
 ALL_data_fit_values_v13["V/nT"] =  abs(ALL_data_fit_values_v13['A(1D)'])/abs(ALL_data_fit_values_v13['G(1D)'])
 ALL_data_fit_values_v14["V/nT"] =  abs(ALL_data_fit_values_v14['A(1D)'])/abs(ALL_data_fit_values_v14['G(1D)'])
+ALL_data_fit_values_v15["V/nT"] =  abs(ALL_data_fit_values_v15['A(1D)'])/abs(ALL_data_fit_values_v15['G(1D)'])
 
 # list of all data frames
 all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, ALL_data_fit_values_v8,
         ALL_data_fit_values_v9, ALL_data_fit_values_v10, ALL_data_fit_values_v11, ALL_data_fit_values_v12, 
         ALL_data_fit_values_v13,ALL_data_fit_values_v14, ALL_data_fit_values, ALL_data_fit_values_v2, ALL_data_fit_values_v3,
-        ALL_data_fit_values_v4]    
+        ALL_data_fit_values_v4, ALL_data_fit_values_v15]    
   
 
 ## Load data for sliders/ tables
@@ -109,12 +112,13 @@ Github_urls_v11 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_a
 Github_urls_v12 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/10-04-21_Github_urls_sorted.csv")
 Github_urls_v13 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/19-04-21_Github_urls_sorted.csv")
 Github_urls_v14 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/21-04-21_Github_urls_sorted.csv")
+Github_urls_v15 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/26-04-21_Github_urls_sorted.csv")
 
     
 # list of all data frames
 all_git_df=[Github_urls_v5, Github_urls_v6, Github_urls_v7, Github_urls_v8,Github_urls_v9,
             Github_urls_v10, Github_urls_v11, Github_urls_v12, Github_urls_v13, Github_urls_v14,
-            Github_urls_v1, Github_urls_v2, Github_urls_v3, Github_urls_v4]    
+            Github_urls_v1, Github_urls_v2, Github_urls_v3, Github_urls_v4, Github_urls_v15]    
 
 
 # Inital data to show (selected point)
@@ -192,11 +196,12 @@ app.layout = html.Div(children=[
                                 {'label': 'V2: Gradient (492 sample, 11-04-21)', 'value':6}, 
                                 {'label': 'V2: GA (500 sample, 19-04-21)', 'value':8}, 
                                 {'label': 'V2: GA (500 sample, 21-04-21)', 'value':9},
+                                {'label': 'V2: GA (250 sample, 26-04-21)', 'value':14},
                             ],
                             value=2
                         ), 
                         html.Div(id="value_dropdown_container"),                                  
-                        dcc.Graph(id='graph-with-slider',config={'displayModeBar': False}),
+                        dcc.Graph(id='graph-with-slider',config={'displayModeBar': True}),
                         html.Br(), #new line
                         html.Div(id='HanleScanType', style={'fontSize': 12}),                          
                         html.Div(id='totalpoints', style={'fontSize': 12}),  
@@ -305,7 +310,7 @@ app.layout = html.Div(children=[
 def update_figure(data_version):
   if data_version == 0 or data_version == 1 or data_version ==2 or data_version ==3 or data_version == 4 or data_version ==5 or data_version == 10 or data_version == 11 or data_version == 12 or data_version == 13 :        
     A = 'Scan Type = 3D'
-  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9:  
+  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14:  
     A = 'Scan Type = 2D/1D'
   return A
 
@@ -315,7 +320,7 @@ def update_figure(data_version):
     Output('noise-title', 'style'),
     Input('HanleScanType', 'children'))
 def show_hide_element(scan_type):
-    if scan_type == 'Scan Type = 2D/1D':   
+    if scan_type == 'Scan Type = 2D/1D': 
         return {'display': 'block'}
     if scan_type == 'Scan Type = 3D': 
         return {'display': 'none'}     
@@ -324,7 +329,7 @@ def show_hide_element(scan_type):
     Output('sensitivity-title', 'style'),
     Input('HanleScanType', 'children'))
 def show_hide_element(scan_type):
-    if scan_type == 'Scan Type = 2D/1D':   
+    if scan_type == 'Scan Type = 2D/1D': 
         return {'display': 'block'}
     if scan_type == 'Scan Type = 3D': 
         return {'display': 'none'}        
@@ -356,7 +361,7 @@ def display_click_data(data_version, scan_type):
   df2 = all_df[data_version] 
   if scan_type == 'Scan Type = 3D':
     O = [{"label": i, "value": i} for i in df2.columns[0:21]]
-  if scan_type == 'Scan Type = 2D/1D':  
+  if scan_type == 'Scan Type = 2D/1D': 
     O = [{"label": i, "value": i} for i in df2.columns[0:27]]+[{"label": i, "value": i} for i in df2.columns[28:29]] 
   A =  dcc.Dropdown(id='x_value_dropdown',
                       options=O,
@@ -371,7 +376,7 @@ def display_click_data(data_version, scan_type):
   df2 = all_df[data_version] 
   if scan_type == 'Scan Type = 3D':
     O = [{"label": i, "value": i} for i in df2.columns[0:21]]
-  if scan_type == 'Scan Type = 2D/1D':  
+  if scan_type == 'Scan Type = 2D/1D': 
     O = [{"label": i, "value": i} for i in df2.columns[0:27]]+[{"label": i, "value": i} for i in df2.columns[28:29]] 
   A =  dcc.Dropdown(id='y_value_dropdown',
                       options=O,
@@ -386,7 +391,7 @@ def display_click_data(data_version, scan_type):
   df2 = all_df[data_version] 
   if scan_type == 'Scan Type = 3D':
     O = [{"label": i, "value": i} for i in df2.columns[0:21]]
-  if scan_type == 'Scan Type = 2D/1D':  
+  if scan_type == 'Scan Type = 2D/1D': 
     O = [{"label": i, "value": i} for i in df2.columns[0:27]]+[{"label": i, "value": i} for i in df2.columns[28:29]] 
   A =  dcc.Dropdown(id='z_value_dropdown',
                       options=O,
@@ -402,7 +407,7 @@ def display_click_data(data_version, scan_type):
   df2 = all_df[data_version] 
   if scan_type == 'Scan Type = 3D':
     O = [{"label": i, "value": i} for i in df2.columns[19:21]]+[{"label": i, "value": i} for i in df2.columns[0:7]]
-  if scan_type == 'Scan Type = 2D/1D':  
+  if scan_type == 'Scan Type = 2D/1D': 
     O = [{"label": i, "value": i} for i in df2.columns[28:29]]+[{"label": i, "value": i} for i in df2.columns[7:27]] 
   A =  dcc.RadioItems(id='value_dropdown',
                       options=O,
@@ -423,7 +428,7 @@ def display_click_data(data_version, scan_type):
   df2 = all_df[data_version]    
   if scan_type == 'Scan Type = 3D':
     A1 = 'A'
-  if scan_type == 'Scan Type = 2D/1D':
+  if scan_type == 'Scan Type = 2D/1D': 
     A1 = 'A(1D)'   
   A = dcc.Input(id="A_min", type="number",debounce=True, value = df2[A1].min(), style={'width':'50%', 'fontSize': 12})
   B = dcc.Input(id="A_max", type="number",debounce=True, value = df2[A1].max(), style={'width':'50%', 'fontSize': 12})
@@ -443,7 +448,7 @@ def number_render(data_version, A_min, A_max, scan_type):
   if scan_type == 'Scan Type = 3D':
     A = 'A'
     TEXT = "Full A range: {} to {}"
-  if scan_type == 'Scan Type = 2D/1D':
+  if scan_type == 'Scan Type = 2D/1D': 
     A = 'A(1D)'       
     TEXT ="Full A (1D) range: {} to {}"
   A = TEXT.format(round(df2[A].min(),3), round(df2[A].max(), 3))
@@ -488,7 +493,7 @@ def display_click_data(data_version,scan_type):
   df2 = all_df[data_version]    
   if scan_type == 'Scan Type = 3D':
     G1 = 'G1'
-  if scan_type == 'Scan Type = 2D/1D':
+  if scan_type == 'Scan Type = 2D/1D': 
     G1 = 'G(1D)'    
   A = dcc.Input(id="G1_min", type="number",debounce=True, value = df2[G1].min(), style={'width':'50%', 'fontSize': 12})
   B = dcc.Input(id="G1_max", type="number",debounce=True, value = df2[G1].max(), style={'width':'50%', 'fontSize': 12})
@@ -510,7 +515,7 @@ def number_render(data_version, G1_min, G1_max, scan_type):
   if scan_type == 'Scan Type = 3D':
     G1 = 'G1'
     TEXT = "Full G1 range: {} to {}"    
-  if scan_type == 'Scan Type = 2D/1D':
+  if scan_type == 'Scan Type = 2D/1D': 
     G1 = 'G(1D)' 
     TEXT ="Full G (1D) range: {} to {}"
   A = TEXT.format(round(df2[G1].min(),5), round(df2[G1].max(),5))
@@ -529,7 +534,7 @@ def display_click_data(data_version, scan_type):
   if scan_type == 'Scan Type = 3D':
     G2 = 'G2'
     TEXT = "Full G2 range: {} to {}"    
-  if scan_type == 'Scan Type = 2D/1D':
+  if scan_type == 'Scan Type = 2D/1D': 
     G2 = 'G2(2D)' 
   A = dcc.Input(id="G2_min", type="number",debounce=True, value = df2[G2].min(), style={'width':'50%', 'fontSize': 12})
   B = dcc.Input(id="G2_max", type="number",debounce=True, value = df2[G2].max(), style={'width':'50%', 'fontSize': 12})
@@ -550,7 +555,7 @@ def number_render(data_version, G2_min, G2_max, scan_type):
   if scan_type == 'Scan Type = 3D':
     G2 = 'G2'
     TEXT = "Full G2 range: {} to {}"    
-  if scan_type == 'Scan Type = 2D/1D':
+  if scan_type == 'Scan Type = 2D/1D': 
     G2 = 'G2(2D)' 
     TEXT ="Full G2 (2D) range: {} to {}"    
   A = "Full G2 range: {} to {}".format(round(df2[G2].min(),5), round(df2[G2].max(),5))
@@ -621,7 +626,7 @@ def display_click_data(data_version, scan_type):
   df2 = all_df[data_version]   
   if scan_type == 'Scan Type = 3D':        
     temp = 'Temp'
-  if scan_type == 'Scan Type = 2D/1D':
+  if scan_type == 'Scan Type = 2D/1D': 
     temp = 'Temperature (C) '
   A = dcc.RangeSlider(id = "temp-range-slider",
                       min=df2[temp].min(),
@@ -670,7 +675,7 @@ def display_click_data(data_version, scan_type):
   df2 = all_df[data_version] 
   if scan_type == 'Scan Type = 3D':        
     LD = 'Laser_Detuning'
-  if scan_type == 'Scan Type = 2D/1D':
+  if scan_type == 'Scan Type = 2D/1D': 
     LD = 'Detuning (GHz) ' 
   A = dcc.RangeSlider(id='LD-range-slider',
                       min=-20,
@@ -719,7 +724,7 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, data_version, x_value, y_value
     A = 'A'
     G1 = 'G1'
     G2 ='G2'
-  if scan_type == 'Scan Type = 2D/1D':
+  if scan_type == 'Scan Type = 2D/1D': 
     temp='Temperature (C) '
     ld='Detuning (GHz) '
     lp='Laser Power (uW) '
@@ -751,7 +756,7 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, data_version, x_value, y_value
     Output('radioitems-sensitivity-container', 'children'),
     Input('HanleScanType', 'children'))
 def update_figure(scan_type):
-    if scan_type == 'Scan Type = 2D/1D':     
+    if scan_type == 'Scan Type = 2D/1D': 
         A = dcc.RadioItems(
             id='value_dropdown_1D_sensitivity',
             options=[{"label": i, "value": i} for i in ["Hanle Single Axis", "Sensitivity", "Noise"]],
@@ -768,7 +773,7 @@ def update_figure(scan_type):
     Input('value_dropdown_1D_sensitivity', 'value'),
     Input('HanleScanType', 'children'))
 def show_hide_element(visibility_state, scan_type):
-    if scan_type == 'Scan Type = 2D/1D':   
+    if scan_type == 'Scan Type = 2D/1D': 
         if visibility_state == 'Sensitivity':
             return {'display': 'block'}
         if visibility_state != 'Sensitivity':
@@ -783,7 +788,7 @@ def show_hide_element(visibility_state, scan_type):
     Input('value_dropdown_1D_sensitivity', 'value'),
     Input('HanleScanType', 'children'))
 def show_hide_element(visibility_state, scan_type):
-    if scan_type == 'Scan Type = 2D/1D':     
+    if scan_type == 'Scan Type = 2D/1D': 
         if visibility_state == 'Hanle Single Axis':
             return {'display': 'block'}
         if visibility_state != 'Hanle Single Axis':
@@ -797,7 +802,7 @@ def show_hide_element(visibility_state, scan_type):
     Input('value_dropdown_1D_sensitivity', 'value'),
     Input('HanleScanType', 'children'))
 def show_hide_element(visibility_state, scan_type):
-    if scan_type == 'Scan Type = 2D/1D':       
+    if scan_type == 'Scan Type = 2D/1D': 
         if visibility_state == 'Noise':
             return {'display': 'block'}
         if visibility_state != 'Noise':
@@ -813,7 +818,7 @@ def show_hide_element(visibility_state, scan_type):
     Input('segselect', 'value'),
     Input('HanleScanType', 'children'))
 def update_figure(clickData, data_version, scan_type):
-    if scan_type == 'Scan Type = 2D/1D':
+    if scan_type == 'Scan Type = 2D/1D': 
         df2 = all_df[data_version] 
         Github_urls = all_git_df[data_version]        
         if clickData == None:
@@ -831,10 +836,17 @@ def update_figure(clickData, data_version, scan_type):
         filtered_df3 = filtered_df2[(filtered_df2['Laser_Detuning']== ld)]
         data_url = filtered_df3.iloc[0,0]
         df = pd.read_table(data_url)
-        df.columns = df.iloc[0]
-        df =df.iloc[1:]
-        df.reset_index(drop=True, inplace=True)
-        df.columns = ["a","b", "Frequency (Hz)", "Photodiode Voltage (V)", "c","d"]
+        if data_version ==14:
+            df = df.reset_index()
+            df.columns = df.iloc[0]
+            df =df.iloc[1:]
+            df = df.iloc[0:25000, 7:9] # 3D data
+            df = df.rename(columns={"Heater Current (A)" : "Frequency (Hz)" ,"Temperature (C)" : "Photodiode Voltage (V)"})
+        else:
+            df.columns = df.iloc[0]
+            df =df.iloc[1:]
+            df.reset_index(drop=True, inplace=True)
+            df.columns = ["a","b", "Frequency (Hz)", "Photodiode Voltage (V)", "c","d"]
         df = df.apply(pd.to_numeric)
         df2 = all_df[data_version] 
         df2_f1 = df2[(df2['Temperature (C) ']== temp)]
@@ -859,7 +871,7 @@ def update_figure(clickData, data_version, scan_type):
     Input('segselect', 'value'),
     Input('HanleScanType', 'children'))
 def update_figure(clickData, data_version, scan_type):
-    if scan_type == 'Scan Type = 2D/1D':
+    if scan_type == 'Scan Type = 2D/1D': 
         df2 = all_df[data_version] 
         Github_urls = all_git_df[data_version]        
         if clickData == None:
@@ -877,11 +889,17 @@ def update_figure(clickData, data_version, scan_type):
         filtered_df3 = filtered_df2[(filtered_df2['Laser_Detuning']== ld)]
         data_url = filtered_df3.iloc[0,0]
         df = pd.read_table(data_url)
-        df.columns = df.iloc[0]
-        df =df.iloc[1:]
-        df.reset_index(drop=True, inplace=True)
-        df.columns = ["a","b", "Frequency (Hz)", "Photodiode Voltage (V)", "c","d"]
-        df = df.apply(pd.to_numeric)
+        if data_version ==14:
+            df = df.reset_index()
+            df.columns = df.iloc[0]
+            df =df.iloc[1:]
+            df = df.iloc[0:25000, 7:9] # 3D data
+            df = df.rename(columns={"Heater Current (A)" : "Frequency (Hz)" ,"Temperature (C)" : "Photodiode Voltage (V)"})
+        else:
+            df.columns = df.iloc[0]
+            df =df.iloc[1:]
+            df.reset_index(drop=True, inplace=True)
+            df.columns = ["a","b", "Frequency (Hz)", "Photodiode Voltage (V)", "c","d"]
         fig2 = px.line(df, x="Frequency (Hz)", y="Photodiode Voltage (V)", log_x=True, log_y=True,                  
                        labels={"Photodiode Voltage (V)": "Noise (V/√Hz)"},) 
         fig2.update_layout(height=300)
@@ -977,7 +995,7 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, col, data_version, G1_min, G1_
     A = 'A'
     G1 = 'G1'
     G2 ='G2'
-  if scan_type == 'Scan Type = 2D/1D':
+  if scan_type == 'Scan Type = 2D/1D': 
     temp='Temperature (C) '
     ld='Detuning (GHz) '
     lp='Laser Power (uW) '
@@ -1081,7 +1099,7 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, col, data_version, G1_min, G1_
     A = 'A'
     G1 = 'G1'
     G2 ='G2'
-  if scan_type == 'Scan Type = 2D/1D':
+  if scan_type == 'Scan Type = 2D/1D': 
     temp='Temperature (C) '
     ld='Detuning (GHz) '
     lp='Laser Power (uW) '
@@ -1098,9 +1116,9 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, col, data_version, G1_min, G1_
 #                   (df2['Error_G2']<= G2_error_max)&(df2['Error_G2']>= G2_error_min)&                    
                     (df2[ld]<= LD[1])&(df2[ld]>= LD[0])]     
   fig = px.scatter_3d(filtered_df, y=temp, z=ld, x=lp, color=col)  
-  fig.update_layout(margin={'l': 0, 'b': 0, 't': 10, 'r': 0}, hovermode='closest')
+  fig.update_layout(margin={'l': 0, 'b': 0, 't': 30, 'r': 0}, hovermode='closest')
   fig.update_layout(transition_duration=500)
-  fig.update_layout(height=350)
+  fig.update_layout(height=500)
   fig.update_layout(scene = dict(
                     xaxis_title='Laser Power (μW)',
                     yaxis_title='Temperature (°C)',
@@ -1168,7 +1186,7 @@ def on_trace_click(clickData, data_version,scan_type):
     Input('HanleScanType', 'children'))
 def on_trace_click(clickData, data_version,scan_type):
     df2 = all_df[data_version]  
-    if scan_type == 'Scan Type = 2D/1D':
+    if scan_type == 'Scan Type = 2D/1D': 
         if clickData== None:
             x = 14
             line = df2.iloc[x,] 
@@ -1193,7 +1211,7 @@ def on_trace_click(clickData, data_version,scan_type):
     Input('HanleScanType', 'children'))
 def on_trace_click(clickData, data_version,scan_type):
     df2 = all_df[data_version]  
-    if scan_type == 'Scan Type = 2D/1D':
+    if scan_type == 'Scan Type = 2D/1D': 
         if clickData== None:
             x = 14
             line = df2.iloc[x,] 
@@ -1267,7 +1285,7 @@ def update_figure(clickData, data_version, scan_type):
     Input('segselect', 'value'),
     Input('HanleScanType', 'children'))
 def update_figure(clickData, data_version, scan_type):
-    if scan_type == 'Scan Type = 2D/1D':
+    if scan_type == 'Scan Type = 2D/1D': 
         df2 = all_df[data_version] 
         Github_urls = all_git_df[data_version]        
         if clickData == None:
@@ -1287,7 +1305,10 @@ def update_figure(clickData, data_version, scan_type):
         df = pd.read_table(data_url, index_col=False)
         df.columns = df.iloc[0]
         df =df.iloc[1:]
-        df_2d = df.iloc[0:441, 0:3] #2D data
+        if data_version == 14: 
+            df_2d = df.iloc[0:960, 0:3] #2D data 
+        else :
+            df_2d = df.iloc[0:441, 0:3] #2D data       
         df_2d = df_2d.apply(pd.to_numeric)
         fig = px.scatter(df_2d, x="X  Field (nT)", y="Z  Field (nT)",
                          color="Photodiode Voltage (V)", color_continuous_scale='aggrnyl')      
@@ -1308,7 +1329,7 @@ def update_figure(clickData, data_version, scan_type):
     Input('segselect', 'value'),
     Input('HanleScanType', 'children'))
 def update_figure(clickData, data_version, scan_type):
-    if scan_type == 'Scan Type = 2D/1D':
+    if scan_type == 'Scan Type = 2D/1D': 
         df2 = all_df[data_version] 
         Github_urls = all_git_df[data_version]        
         if clickData == None:
@@ -1328,7 +1349,11 @@ def update_figure(clickData, data_version, scan_type):
         df = pd.read_table(data_url, index_col=False)
         df.columns = df.iloc[0]
         df =df.iloc[1:]
-        df_1d = df.iloc[0:51, 4:6] # 3D data
+        if data_version ==14:
+            df_1d = df.iloc[0:50, 4:6] # 3D data
+            df_1d = df_1d.rename(columns={"Photodiode Voltage (V)" : "Y  Field (nT)","Frequency (Hz)" : "Photodiode Voltage (V)"})
+        else:
+            df_1d = df.iloc[0:51, 4:6] # 3D data
         df_1d = df_1d.apply(pd.to_numeric)
         fig2 = px.line(df_1d, x="Y  Field (nT)", y="Photodiode Voltage (V)")
         fig2.update_traces(mode='markers+lines',line_color='red')  
@@ -1455,7 +1480,7 @@ def display_click_data(clickData2, clickData, data_version, scan_type):
         fig.update_layout(height=150)
         fig.update_layout(font=dict(size=8)) # Change font size
         return fig
-    if scan_type == 'Scan Type = 2D/1D':
+    if scan_type == 'Scan Type = 2D/1D': 
         df2 = all_df[data_version] 
         Github_urls = all_git_df[data_version]      
         if clickData == None:
@@ -1475,7 +1500,10 @@ def display_click_data(clickData2, clickData, data_version, scan_type):
         df = pd.read_table(data_url, index_col=False)
         df.columns = df.iloc[0]
         df =df.iloc[1:]
-        df_2d = df.iloc[0:441, 0:3] #2D data
+        if data_version == 14: 
+            df_2d = df.iloc[0:960, 0:3] #2D data 
+        else :
+            df_2d = df.iloc[0:441, 0:3] #2D data   
         newdf = df_2d.apply(pd.to_numeric)
         if clickData2 == None:
             x = 0
@@ -1536,7 +1564,7 @@ def display_click_data(clickData2, clickData, data_version, scan_type):
         fig.update_layout(height=150)
         fig.update_layout(font=dict(size=8)) # Change font size
         return fig
-    if scan_type == 'Scan Type = 2D/1D':
+    if scan_type == 'Scan Type = 2D/1D': 
         df2 = all_df[data_version] 
         Github_urls = all_git_df[data_version]      
         if clickData == None:
@@ -1556,7 +1584,10 @@ def display_click_data(clickData2, clickData, data_version, scan_type):
         df = pd.read_table(data_url, index_col=False)
         df.columns = df.iloc[0]
         df =df.iloc[1:]
-        df_2d = df.iloc[0:441, 0:3] #2D data
+        if data_version == 14: 
+            df_2d = df.iloc[0:960, 0:3] #2D data 
+        else :
+            df_2d = df.iloc[0:441, 0:3] #2D data  
         newdf = df_2d.apply(pd.to_numeric)
         if clickData2 == None:
             x = 0
@@ -1569,5 +1600,6 @@ def display_click_data(clickData2, clickData, data_version, scan_type):
         fig.update_layout(height=150)
         fig.update_layout(font=dict(size=8)) # Change font size
         return fig  
+    
 if __name__ == '__main__':
     app.run_server()
