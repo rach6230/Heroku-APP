@@ -9,8 +9,6 @@ import plotly.express as px
 ########### Define your variables
 tabtitle='SERF: Parameter Space Testing'
 
-
-
 #### Import Fit Data
 ##v1
 ALL_data_fit_values = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/Full_fit_Data.csv')
@@ -38,6 +36,11 @@ ALL_data_fit_values_v12 = pd.read_csv('https://raw.githubusercontent.com/rach623
 ALL_data_fit_values_v13 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/19-04-21-Full_fit_Data.csv')
 ALL_data_fit_values_v14 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/21-04-21-Full_fit_Data.csv')
 ALL_data_fit_values_v15 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/26-04-21-Full_fit_Data.csv')
+ALL_data_fit_values_v16 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/09-05-21-Full_fit_Data.csv')
+ALL_data_fit_values_v17 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/07-05-21-Full_fit_Data.csv')
+ALL_data_fit_values_v18 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/10-05-21-Full_fit_Data.csv')
+#ALL_data_fit_values_v18 = pd.read_csv('')
+
 
 # Create col of A/C:
 ALL_data_fit_values["V/nT"] =  abs(ALL_data_fit_values['A'])/abs(ALL_data_fit_values['G2'])
@@ -75,12 +78,16 @@ ALL_data_fit_values_v12["V/nT"] =  abs(ALL_data_fit_values_v12['A(1D)'])/abs(ALL
 ALL_data_fit_values_v13["V/nT"] =  abs(ALL_data_fit_values_v13['A(1D)'])/abs(ALL_data_fit_values_v13['G(1D)'])
 ALL_data_fit_values_v14["V/nT"] =  abs(ALL_data_fit_values_v14['A(1D)'])/abs(ALL_data_fit_values_v14['G(1D)'])
 ALL_data_fit_values_v15["V/nT"] =  abs(ALL_data_fit_values_v15['A(1D)'])/abs(ALL_data_fit_values_v15['G(1D)'])
+ALL_data_fit_values_v16["V/nT"] =  abs(ALL_data_fit_values_v16['A(1D)'])/abs(ALL_data_fit_values_v16['G(1D)'])
+ALL_data_fit_values_v17["V/nT"] =  abs(ALL_data_fit_values_v17['A(1D)'])/abs(ALL_data_fit_values_v17['G(1D)'])
+ALL_data_fit_values_v18["V/nT"] =  abs(ALL_data_fit_values_v18['A(1D)'])/abs(ALL_data_fit_values_v18['G(1D)'])
 
 # list of all data frames
 all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, ALL_data_fit_values_v8,
         ALL_data_fit_values_v9, ALL_data_fit_values_v10, ALL_data_fit_values_v11, ALL_data_fit_values_v12, 
         ALL_data_fit_values_v13,ALL_data_fit_values_v14, ALL_data_fit_values, ALL_data_fit_values_v2, ALL_data_fit_values_v3,
-        ALL_data_fit_values_v4, ALL_data_fit_values_v15]    
+        ALL_data_fit_values_v4, ALL_data_fit_values_v15, ALL_data_fit_values_v16, ALL_data_fit_values_v17, 
+        ALL_data_fit_values_v18]
   
 
 ## Load data for sliders/ tables
@@ -113,12 +120,16 @@ Github_urls_v12 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_a
 Github_urls_v13 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/19-04-21_Github_urls_sorted.csv")
 Github_urls_v14 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/21-04-21_Github_urls_sorted.csv")
 Github_urls_v15 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/26-04-21_Github_urls_sorted.csv")
-
+Github_urls_v16 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/09-05-21_Github_urls_sorted.csv")
+Github_urls_v17 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/07-05-21_Github_urls_sorted.csv")
+Github_urls_v18 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/10-05-21_Github_urls_sorted.csv")
+#Github_urls_v18 = pd.read_csv("")
     
 # list of all data frames
 all_git_df=[Github_urls_v5, Github_urls_v6, Github_urls_v7, Github_urls_v8,Github_urls_v9,
             Github_urls_v10, Github_urls_v11, Github_urls_v12, Github_urls_v13, Github_urls_v14,
-            Github_urls_v1, Github_urls_v2, Github_urls_v3, Github_urls_v4, Github_urls_v15]    
+            Github_urls_v1, Github_urls_v2, Github_urls_v3, Github_urls_v4, Github_urls_v15, Github_urls_v16,
+            Github_urls_v17,Github_urls_v18]
 
 
 # Inital data to show (selected point)
@@ -136,7 +147,6 @@ Version = '''
 * **Coil Drivers**: DAQ
 * **Heater Driver**: MOSFET, 150kHz, square
 * **Heaters**: 1 x 8 Ohm (non-magnetic)'''
-
 
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -197,6 +207,9 @@ app.layout = html.Div(children=[
                                 {'label': 'V2: GA (500 sample, 19-04-21)', 'value':8}, 
                                 {'label': 'V2: GA (500 sample, 21-04-21)', 'value':9},
                                 {'label': 'V2: GA (250 sample, 26-04-21)', 'value':14},
+                                {'label': 'V2: Gradient, V/nT (492 sample, 07-05-21)', 'value':16},
+                                {'label': 'V2: Gradient, sensitivity (492 sample, 09-05-21)', 'value':15},
+                                {'label': 'V2: GA, V/nT (500 sample, 10-05-21)', 'value':17},
                             ],
                             value=2
                         ), 
@@ -310,7 +323,7 @@ app.layout = html.Div(children=[
 def update_figure(data_version):
   if data_version == 0 or data_version == 1 or data_version ==2 or data_version ==3 or data_version == 4 or data_version ==5 or data_version == 10 or data_version == 11 or data_version == 12 or data_version == 13 :        
     A = 'Scan Type = 3D'
-  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14:  
+  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17:  
     A = 'Scan Type = 2D/1D'
   return A
 
@@ -408,7 +421,7 @@ def display_click_data(data_version, scan_type):
   if scan_type == 'Scan Type = 3D':
     O = [{"label": i, "value": i} for i in df2.columns[19:21]]+[{"label": i, "value": i} for i in df2.columns[0:7]]
   if scan_type == 'Scan Type = 2D/1D': 
-    O = [{"label": i, "value": i} for i in df2.columns[28:29]]+[{"label": i, "value": i} for i in df2.columns[7:27]] 
+    O = [{"label": i, "value": i} for i in df2.columns[28:29]]+[{"label": i, "value": i} for i in df2.columns[7:27]]+[{"label": i, "value": i} for i in df2.columns[3:4]] 
   A =  dcc.RadioItems(id='value_dropdown',
                       options=O,
                       value='V/nT',
@@ -842,6 +855,11 @@ def update_figure(clickData, data_version, scan_type):
             df =df.iloc[1:]
             df = df.iloc[0:25000, 7:9] # 3D data
             df = df.rename(columns={"Heater Current (A)" : "Frequency (Hz)" ,"Temperature (C)" : "Photodiode Voltage (V)"})
+        if data_version ==15 or data_version ==16 or data_version ==17:
+            df.columns = df.iloc[0]
+            df =df.iloc[1:]
+            df.reset_index(drop=True, inplace=True)   
+            df.columns = ["a","b","a2", "Frequency (Hz)", "Photodiode Voltage (V)", "c","d", "e"]
         else:
             df.columns = df.iloc[0]
             df =df.iloc[1:]
@@ -895,6 +913,11 @@ def update_figure(clickData, data_version, scan_type):
             df =df.iloc[1:]
             df = df.iloc[0:25000, 7:9] # 3D data
             df = df.rename(columns={"Heater Current (A)" : "Frequency (Hz)" ,"Temperature (C)" : "Photodiode Voltage (V)"})
+        if data_version ==15 or data_version ==16 or data_version ==17:
+            df.columns = df.iloc[0]
+            df =df.iloc[1:]
+            df.reset_index(drop=True, inplace=True)   
+            df.columns = ["a","b","a2", "Frequency (Hz)", "Photodiode Voltage (V)", "c","d", "e"]
         else:
             df.columns = df.iloc[0]
             df =df.iloc[1:]
@@ -1118,7 +1141,7 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, col, data_version, G1_min, G1_
   fig = px.scatter_3d(filtered_df, y=temp, z=ld, x=lp, color=col)  
   fig.update_layout(margin={'l': 0, 'b': 0, 't': 30, 'r': 0}, hovermode='closest')
   fig.update_layout(transition_duration=500)
-  fig.update_layout(height=500)
+  fig.update_layout(height=400)
   fig.update_layout(scene = dict(
                     xaxis_title='Laser Power (μW)',
                     yaxis_title='Temperature (°C)',
@@ -1305,7 +1328,7 @@ def update_figure(clickData, data_version, scan_type):
         df = pd.read_table(data_url, index_col=False)
         df.columns = df.iloc[0]
         df =df.iloc[1:]
-        if data_version == 14: 
+        if data_version == 14 or data_version == 15 or data_version ==16 or data_version ==17: 
             df_2d = df.iloc[0:960, 0:3] #2D data 
         else :
             df_2d = df.iloc[0:441, 0:3] #2D data       
@@ -1352,6 +1375,8 @@ def update_figure(clickData, data_version, scan_type):
         if data_version ==14:
             df_1d = df.iloc[0:50, 4:6] # 3D data
             df_1d = df_1d.rename(columns={"Photodiode Voltage (V)" : "Y  Field (nT)","Frequency (Hz)" : "Photodiode Voltage (V)"})
+        if data_version ==15 or data_version ==16 or data_version ==17:
+            df_1d = df.iloc[0:100, 3:5] # 3D data  
         else:
             df_1d = df.iloc[0:51, 4:6] # 3D data
         df_1d = df_1d.apply(pd.to_numeric)
