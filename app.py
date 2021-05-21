@@ -789,7 +789,16 @@ def update_figure(scan_type, data_version):
                 labelStyle={'display': 'inline-block'},
                 style={'fontSize': 12}
             ), 
-        return A
+    if scan_type == 'Scan Type = 3D': 
+        A = dcc.RadioItems(
+            id='value_dropdown_1D_sensitivity',
+            options=[{"label": i, "value": i} for i in ["Hanle Single Axis"]],
+            value='Hanle Single Axis',
+            inputStyle={"margin-left": "20px"}, # add space between radio items
+            labelStyle={'display': 'inline-block'},
+            style={'fontSize': 12}
+        ),  
+    return A
     
 ## Callback for sensitivity plotter
 @app.callback(
@@ -1636,7 +1645,7 @@ def display_click_data(clickData2, clickData, data_version, scan_type):
         fig.update_layout(margin={'l': 0, 'b': 0, 't': 0, 'r': 10}, hovermode='closest') #Change margins
         fig.update_layout(height=150)
         fig.update_layout(font=dict(size=8)) # Change font size
-        return fig  
+        return fig   
     
     
 if __name__ == '__main__':
