@@ -767,17 +767,28 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, data_version, x_value, y_value
 ######## Call backs for sensitivity plot ################
 @app.callback(
     Output('radioitems-sensitivity-container', 'children'),
-    Input('HanleScanType', 'children'))
-def update_figure(scan_type):
+    Input('HanleScanType', 'children'),
+    Input('segselect', 'value'))
+def update_figure(scan_type, data_version):
     if scan_type == 'Scan Type = 2D/1D': 
-        A = dcc.RadioItems(
-            id='value_dropdown_1D_sensitivity',
-            options=[{"label": i, "value": i} for i in ["Hanle Single Axis", "Sensitivity", "Noise"]],
-            value='Sensitivity',
-            inputStyle={"margin-left": "20px"}, # add space between radio items
-            labelStyle={'display': 'inline-block'},
-            style={'fontSize': 12}
-        ), 
+        if data_version== 14 or data_version== 15 or data_version== 16 or data_version== 17: 
+            A = dcc.RadioItems(
+                id='value_dropdown_1D_sensitivity',
+                options=[{"label": i, "value": i} for i in ["Hanle Single Axis", "Sensitivity"]],
+                value='Sensitivity',
+                inputStyle={"margin-left": "20px"}, # add space between radio items
+                labelStyle={'display': 'inline-block'},
+                style={'fontSize': 12}
+            ), 
+        else:
+            A = dcc.RadioItems(
+                id='value_dropdown_1D_sensitivity',
+                options=[{"label": i, "value": i} for i in ["Hanle Single Axis", "Sensitivity", "Noise"]],
+                value='Sensitivity',
+                inputStyle={"margin-left": "20px"}, # add space between radio items
+                labelStyle={'display': 'inline-block'},
+                style={'fontSize': 12}
+            ), 
         return A
     
 ## Callback for sensitivity plotter
@@ -865,15 +876,16 @@ def update_figure(clickData, data_version, scan_type):
             df =df.iloc[1:]
             df.reset_index(drop=True, inplace=True)
             df.columns = ["a","b", "Frequency (Hz)", "Photodiode Voltage (V)", "c","d"]
+            df = df.apply(pd.to_numeric)
+            df2 = all_df[data_version] 
+            df2_f1 = df2[(df2['Temperature (C) ']== temp)]
+            df2_f2 = df2_f1[(df2_f1['Laser Power (uW) ']== lp)]
+            df2_f3 = df2_f2[(df2_f2['Detuning (GHz) ']== ld)]
+            vnt = df2_f3['V/nT']
+            vnt = vnt.apply(pd.to_numeric)
+            vnt = vnt.iloc[0,]
+            df["Photodiode Voltage (V)"]= (df["Photodiode Voltage (V)"]/vnt)*(1*10**-9) #convert to sensitivity
         df = df.apply(pd.to_numeric)
-        df2 = all_df[data_version] 
-        df2_f1 = df2[(df2['Temperature (C) ']== temp)]
-        df2_f2 = df2_f1[(df2_f1['Laser Power (uW) ']== lp)]
-        df2_f3 = df2_f2[(df2_f2['Detuning (GHz) ']== ld)]
-        vnt = df2_f3['V/nT']
-        vnt = vnt.apply(pd.to_numeric)
-        vnt = vnt.iloc[0,]
-        df["Photodiode Voltage (V)"]= (df["Photodiode Voltage (V)"]/vnt)*(1*10**-9) #convert to sensitivity
         fig2 = px.line(df, x="Frequency (Hz)", y="Photodiode Voltage (V)", log_x=True, log_y=True,                  
                        labels={"Photodiode Voltage (V)": "Sensitivity (T/√Hz)"},) 
         fig2.update_layout(height=300)
@@ -889,7 +901,7 @@ def update_figure(clickData, data_version, scan_type):
     Input('segselect', 'value'),
     Input('HanleScanType', 'children'))
 def update_figure(clickData, data_version, scan_type):
-    if scan_type == 'Scan Type = 2D/1D': 
+    if scan_type == 'Scan Type = 2D/1D' : 
         df2 = all_df[data_version] 
         Github_urls = all_git_df[data_version]        
         if clickData == None:
@@ -1625,6 +1637,7 @@ def display_click_data(clickData2, clickData, data_version, scan_type):
         fig.update_layout(height=150)
         fig.update_layout(font=dict(size=8)) # Change font size
         return fig  
+    
     
 if __name__ == '__main__':
     app.run_server()
