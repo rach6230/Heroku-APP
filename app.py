@@ -9,6 +9,7 @@ import plotly.express as px
 ########### Define your variables
 tabtitle='SERF: Parameter Space Testing'
 
+
 #### Import Fit Data
 ##v1
 ALL_data_fit_values = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/Full_fit_Data.csv')
@@ -39,6 +40,9 @@ ALL_data_fit_values_v15 = pd.read_csv('https://raw.githubusercontent.com/rach623
 ALL_data_fit_values_v16 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/09-05-21-Full_fit_Data.csv')
 ALL_data_fit_values_v17 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/07-05-21-Full_fit_Data.csv')
 ALL_data_fit_values_v18 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/10-05-21-Full_fit_Data.csv')
+ALL_data_fit_values_v19 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/01-06-21-Full_fit_Data.csv')
+ALL_data_fit_values_v20 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/01-06-21-LABVIEW-Full_fit_Data.csv')
+
 #ALL_data_fit_values_v18 = pd.read_csv('')
 
 
@@ -81,13 +85,15 @@ ALL_data_fit_values_v15["V/nT"] =  abs(ALL_data_fit_values_v15['A(1D)'])/abs(ALL
 ALL_data_fit_values_v16["V/nT"] =  abs(ALL_data_fit_values_v16['A(1D)'])/abs(ALL_data_fit_values_v16['G(1D)'])
 ALL_data_fit_values_v17["V/nT"] =  abs(ALL_data_fit_values_v17['A(1D)'])/abs(ALL_data_fit_values_v17['G(1D)'])
 ALL_data_fit_values_v18["V/nT"] =  abs(ALL_data_fit_values_v18['A(1D)'])/abs(ALL_data_fit_values_v18['G(1D)'])
+ALL_data_fit_values_v19["V/nT"] =  abs(ALL_data_fit_values_v19['A(1D)'])/abs(ALL_data_fit_values_v19['G(1D)'])
+ALL_data_fit_values_v20["V/nT"] =  abs(ALL_data_fit_values_v20['A(1D)'])/abs(ALL_data_fit_values_v20['G(1D)'])
 
 # list of all data frames
 all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, ALL_data_fit_values_v8,
         ALL_data_fit_values_v9, ALL_data_fit_values_v10, ALL_data_fit_values_v11, ALL_data_fit_values_v12, 
         ALL_data_fit_values_v13,ALL_data_fit_values_v14, ALL_data_fit_values, ALL_data_fit_values_v2, ALL_data_fit_values_v3,
         ALL_data_fit_values_v4, ALL_data_fit_values_v15, ALL_data_fit_values_v16, ALL_data_fit_values_v17, 
-        ALL_data_fit_values_v18]
+        ALL_data_fit_values_v18,ALL_data_fit_values_v19, ALL_data_fit_values_v20]
   
 
 ## Load data for sliders/ tables
@@ -123,13 +129,17 @@ Github_urls_v15 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_a
 Github_urls_v16 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/09-05-21_Github_urls_sorted.csv")
 Github_urls_v17 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/07-05-21_Github_urls_sorted.csv")
 Github_urls_v18 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/10-05-21_Github_urls_sorted.csv")
+Github_urls_v19 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/01-06-21_Github_urls_sorted.csv")
+Github_urls_v20 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/01-06-21_Github_urls_sorted.csv")
 #Github_urls_v18 = pd.read_csv("")
+
+
     
 # list of all data frames
 all_git_df=[Github_urls_v5, Github_urls_v6, Github_urls_v7, Github_urls_v8,Github_urls_v9,
             Github_urls_v10, Github_urls_v11, Github_urls_v12, Github_urls_v13, Github_urls_v14,
             Github_urls_v1, Github_urls_v2, Github_urls_v3, Github_urls_v4, Github_urls_v15, Github_urls_v16,
-            Github_urls_v17,Github_urls_v18]
+            Github_urls_v17,Github_urls_v18, Github_urls_v19, Github_urls_v20]
 
 
 # Inital data to show (selected point)
@@ -153,7 +163,6 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.title=tabtitle
-
 ########### Set up the layout
 app.layout = html.Div(children=[
   html.Div(className='row',  # Define the row elemen
@@ -210,6 +219,8 @@ app.layout = html.Div(children=[
                                 {'label': 'V2: Gradient, V/nT (492 sample, 07-05-21)', 'value':16},
                                 {'label': 'V2: Gradient, sensitivity (492 sample, 09-05-21)', 'value':15},
                                 {'label': 'V2: GA, V/nT (500 sample, 10-05-21)', 'value':17},
+                                {'label': 'V2: Systematic Testing (sample 3375, 01-06-21) (MATLAB fit)', 'value': 18},
+                                {'label': 'V2: Systematic Testing (sample 3375, 01-06-21) (LABIVEW fit)', 'value': 19}
                             ],
                             value=2
                         ), 
@@ -308,6 +319,22 @@ app.layout = html.Div(children=[
                                          html.P('Colour (optional)'),
                                          html.Div(id='drop_down_custom3'),
                                          dcc.Graph(id='custom_plot',config={'displayModeBar': True}),
+                                         html.P('X-axis scale'),                                         
+                                         dcc.RadioItems(
+                                             id='x-axis-scale-radio',
+                                             options=[{"label": i, "value": i} for i in ["Linear", "Log"]],
+                                             value='Linear',
+                                             inputStyle={"margin-left": "20px"}, # add space between radio items
+                                             labelStyle={'display': 'inline-block'},
+                                             style={'fontSize': 12}),
+                                         html.P('Y-axis scale'),
+                                         dcc.RadioItems(
+                                             id='y-axis-scale-radio',
+                                             options=[{"label": i, "value": i} for i in ["Linear", "Log"]],
+                                             value='Linear',
+                                             inputStyle={"margin-left": "20px"}, # add space between radio items
+                                             labelStyle={'display': 'inline-block'},
+                                             style={'fontSize': 12}),                                          
                                      ]
                                     )
                       ]
@@ -323,7 +350,7 @@ app.layout = html.Div(children=[
 def update_figure(data_version):
   if data_version == 0 or data_version == 1 or data_version ==2 or data_version ==3 or data_version == 4 or data_version ==5 or data_version == 10 or data_version == 11 or data_version == 12 or data_version == 13 :        
     A = 'Scan Type = 3D'
-  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17:  
+  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17or data_version == 18 or data_version == 19:  
     A = 'Scan Type = 2D/1D'
   return A
 
@@ -725,10 +752,12 @@ def display_click_data(data_version, scan_type):
 #              Input('G2_error_max', 'value'),
               Input('A_min', 'value'),
               Input('A_max', 'value'),
-              Input('HanleScanType', 'children'))
+              Input('HanleScanType', 'children'),
+              Input('x-axis-scale-radio', 'value'),
+              Input('y-axis-scale-radio', 'value'),)
 def update_figure(TEMP, LP, VnT_min, VnT_max, LD, data_version, x_value, y_value, z_value, G1_min, G1_max,
                   G2_min, G2_max, #G1_error_min, G1_error_max, G2_error_min, G2_error_max,
-                  A_min, A_max, scan_type):
+                  A_min, A_max, scan_type, x_scale, y_scale):
   df2 = all_df[data_version]   
   if scan_type == 'Scan Type = 3D':        
     temp='Temp'
@@ -753,14 +782,22 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, data_version, x_value, y_value
 #                   (df2['Error_G1']<= G1_error_max)&(df2['Error_G1']>= G1_error_min)&
 #                   (df2['Error_G2']<= G2_error_max)&(df2['Error_G2']>= G2_error_min)&                    
                     (df2[ld]<= LD[1])&(df2[ld]>= LD[0])] 
+  if x_scale == "Log":
+        XLOG = True
+  if y_scale == "Log":
+        YLOG = True        
+  if x_scale == "Linear":
+        XLOG = False
+  if y_scale == "Linear":
+        YLOG = False         
 
   #filtered_df.columns = ['G1', 'G2', 'C (nT)', 'A (V)', 'Bx (nT)', 'By (nT)', 'Bz (nT)', 'Error_G1', 'Error_G2',
   #                       'Error_C', 'Error_A', 'Error_Bx', 'Error_By', 'Error_Bz', 'MSE',
   #                       'Laser Power (μW)', 'Laser Detuning (GHz)', 'Temperature (°C)', 'PP', 'V/nT', 'SE']
   if z_value =="":
-        fig = px.scatter(filtered_df, y=y_value, x=x_value)
+        fig = px.scatter(filtered_df, y=y_value, x=x_value, log_x=XLOG, log_y=YLOG)
   if z_value !="":
-    fig = px.scatter(filtered_df, y=y_value, x=x_value, color=z_value)
+    fig = px.scatter(filtered_df, y=y_value, x=x_value, color=z_value, log_x=XLOG, log_y=YLOG)
   fig.update_layout(margin={'l': 0, 'b': 0, 't': 30, 'r': 0}, hovermode='closest')
   fig.update_layout(height=300)  
   return fig
@@ -875,7 +912,7 @@ def update_figure(clickData, data_version, scan_type):
             df =df.iloc[1:]
             df = df.iloc[0:25000, 7:9] # 3D data
             df = df.rename(columns={"Heater Current (A)" : "Frequency (Hz)" ,"Temperature (C)" : "Photodiode Voltage (V)"})
-        if data_version ==15 or data_version ==16 or data_version ==17:
+        if data_version ==15 or data_version ==16 or data_version ==17 or data_version ==18 or data_version ==19:
             df.columns = df.iloc[0]
             df =df.iloc[1:]
             df.reset_index(drop=True, inplace=True)   
@@ -934,7 +971,7 @@ def update_figure(clickData, data_version, scan_type):
             df =df.iloc[1:]
             df = df.iloc[0:25000, 7:9] # 3D data
             df = df.rename(columns={"Heater Current (A)" : "Frequency (Hz)" ,"Temperature (C)" : "Photodiode Voltage (V)"})
-        if data_version ==15 or data_version ==16 or data_version ==17:
+        if data_version ==15 or data_version ==16 or data_version ==17 or data_version ==18 or data_version ==19:
             df.columns = df.iloc[0]
             df =df.iloc[1:]
             df.reset_index(drop=True, inplace=True)   
@@ -1349,7 +1386,7 @@ def update_figure(clickData, data_version, scan_type):
         df = pd.read_table(data_url, index_col=False)
         df.columns = df.iloc[0]
         df =df.iloc[1:]
-        if data_version == 14 or data_version == 15 or data_version ==16 or data_version ==17: 
+        if data_version == 14 or data_version == 15 or data_version ==16 or data_version ==17or data_version ==18 or data_version ==19: 
             df_2d = df.iloc[0:960, 0:3] #2D data 
         else :
             df_2d = df.iloc[0:441, 0:3] #2D data       
@@ -1396,7 +1433,7 @@ def update_figure(clickData, data_version, scan_type):
         if data_version ==14:
             df_1d = df.iloc[0:50, 4:6] # 3D data
             df_1d = df_1d.rename(columns={"Photodiode Voltage (V)" : "Y  Field (nT)","Frequency (Hz)" : "Photodiode Voltage (V)"})
-        if data_version ==15 or data_version ==16 or data_version ==17:
+        if data_version ==15 or data_version ==16 or data_version ==17 or data_version ==18 or data_version ==19:
             df_1d = df.iloc[0:100, 3:5] # 3D data  
         else:
             df_1d = df.iloc[0:51, 4:6] # 3D data
@@ -1645,8 +1682,7 @@ def display_click_data(clickData2, clickData, data_version, scan_type):
         fig.update_layout(margin={'l': 0, 'b': 0, 't': 0, 'r': 10}, hovermode='closest') #Change margins
         fig.update_layout(height=150)
         fig.update_layout(font=dict(size=8)) # Change font size
-        return fig   
-    
+        return fig  
     
 if __name__ == '__main__':
     app.run_server()
