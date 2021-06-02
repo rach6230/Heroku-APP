@@ -163,6 +163,7 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.title=tabtitle
+
 ########### Set up the layout
 app.layout = html.Div(children=[
   html.Div(className='row',  # Define the row elemen
@@ -808,7 +809,7 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, data_version, x_value, y_value
     Input('segselect', 'value'))
 def update_figure(scan_type, data_version):
     if scan_type == 'Scan Type = 2D/1D': 
-        if data_version== 14 or data_version== 15 or data_version== 16 or data_version== 17: 
+        if data_version== 14 or data_version== 15 or data_version== 16 or data_version== 17 or data_version== 18 or data_version== 19: 
             A = dcc.RadioItems(
                 id='value_dropdown_1D_sensitivity',
                 options=[{"label": i, "value": i} for i in ["Hanle Single Axis", "Sensitivity"]],
@@ -912,11 +913,16 @@ def update_figure(clickData, data_version, scan_type):
             df =df.iloc[1:]
             df = df.iloc[0:25000, 7:9] # 3D data
             df = df.rename(columns={"Heater Current (A)" : "Frequency (Hz)" ,"Temperature (C)" : "Photodiode Voltage (V)"})
-        if data_version ==15 or data_version ==16 or data_version ==17 or data_version ==18 or data_version ==19:
+        if data_version ==15 or data_version ==16 or data_version ==17 :
             df.columns = df.iloc[0]
             df =df.iloc[1:]
             df.reset_index(drop=True, inplace=True)   
             df.columns = ["a","b","a2", "Frequency (Hz)", "Photodiode Voltage (V)", "c","d", "e"]
+        if  data_version ==18 or data_version ==19:
+            df.columns = df.iloc[0]
+            df =df.iloc[1:]
+            df.reset_index(drop=True, inplace=True)   
+            df.columns = ["a","b","a2","gg","f", "Frequency (Hz)", "Photodiode Voltage (V)", "c","d", "e"]  
         else:
             df.columns = df.iloc[0]
             df =df.iloc[1:]
