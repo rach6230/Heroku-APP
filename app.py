@@ -454,7 +454,7 @@ def display_click_data(data_version, scan_type):
   if scan_type == 'Scan Type = 3D':
     O = [{"label": i, "value": i} for i in df2.columns[19:21]]+[{"label": i, "value": i} for i in df2.columns[0:7]]
   if scan_type == 'Scan Type = 2D/1D': 
-    O = [{"label": i, "value": i} for i in df2.columns[28:29]]+[{"label": i, "value": i} for i in df2.columns[7:27]]+[{"label": i, "value": i} for i in df2.columns[3:4]] 
+    O = [{"label": i, "value": i} for i in df2.columns[3:29]]
   A =  dcc.RadioItems(id='value_dropdown',
                       options=O,
                       value='V/nT',
