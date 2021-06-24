@@ -155,11 +155,11 @@ colors = {
 }
 
 ## Version details
-Version = '''
-* **Cell**: Cs
-* **Coil Drivers**: DAQ
-* **Heater Driver**: MOSFET, 150kHz, square
-* **Heaters**: 1 x 8 Ohm (non-magnetic)'''
+#Version = '''
+#* **Cell**: Cs
+#* **Coil Drivers**: DAQ
+#* **Heater Driver**: MOSFET, 150kHz, square
+#* **Heaters**: 1 x 8 Ohm (non-magnetic)'''
 
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -265,10 +265,10 @@ app.layout = html.Div(children=[
                                          html.Br(), #new line  
                                      ]
                                 ), 
-                          html.P('Experiment Version Details:'),
-                          dcc.Markdown(Version, style={'fontSize': 12}),  
-                          html.P('Data Set Details:'),
-                          dcc.Markdown(id='Markdown_notes', style={'fontSize': 12}),  
+                          #html.P('Experiment Version Details:'),
+                          #dcc.Markdown(Version, style={'fontSize': 12}),  
+                          #html.P('Data Set Details:'),
+                          #dcc.Markdown(id='Markdown_notes', style={'fontSize': 12}),  
                       ]
                      ),  # Define the 2nd column
                html.Div(className='four columns div-for-charts',
@@ -1025,35 +1025,35 @@ def show_hide_element(visibility_state):
     
 ################# Callbacks for selected data details  ############################
 
-@app.callback(
-  Output('Markdown_notes', 'children'),
-  Input('segselect', 'value'))
-def display_click_data(data_version):
-  if data_version == 0:  
-    A = '''
-* **Testing type**: M-LOOP for parameter space (Temp: 60-125C, Laser power: 150-800 μW, Laser detuning: -20 to 10 GHz)
-* **Notes**: 166 loop'''
-  if data_version == 2:
-    A = '''
-* **Testing type**: M-LOOP for parameter space (Temp: 70-125C, Laser power: 150-700 μW, Laser detuning: -20 to 10 GHz)
-* **Notes**: 500 loop'''
-  if data_version == 3:
-    A = '''
-* **Testing type**: Genetic Algorithm for parameter space (Temp: 70-125C, Laser power: 150-700 μW, Laser detuning: -20 to 10 GHz)
-* **Notes**: 200 Samples (10 population for 20 loops)'''    
-  if data_version == 1:
-    A = '''
-* **Testing type**: Genetic Algorithm for parameter space (Temp: 100-130C, Laser power: 350-800 μW, Laser detuning: 0-10 GHz)
-* **Notes**: 50 Samples (10 population for 5 loops) '''
-  if data_version ==4:
-    A = '''
-* **Testing type**: Gradient search for parameter space (Temp: 100-130C, Laser power: 350-800 μW, Laser detuning: 0-10 GHz)
-* **Notes**: 20 resolution for 3 axis * 3 loops '''  
-  if data_version == 5:
-    A = '''
-* **Testing type**: Systematic search for parameter space (Temp: 75-125C, Laser power: 500-1200 μW, Laser detuning: -20 to 10 GHz)
-* **Notes**: 8*8*8 full systematic search '''      
-  return A
+#@app.callback(
+#  Output('Markdown_notes', 'children'),
+#  Input('segselect', 'value'))
+#def display_click_data(data_version):
+#  if data_version == 0:  
+#    A = '''
+#* **Testing type**: M-LOOP for parameter space (Temp: 60-125C, Laser power: 150-800 μW, Laser detuning: -20 to 10 GHz)
+#* **Notes**: 166 loop'''
+#  if data_version == 2:
+#    A = '''
+#* **Testing type**: M-LOOP for parameter space (Temp: 70-125C, Laser power: 150-700 μW, Laser detuning: -20 to 10 GHz)
+#* **Notes**: 500 loop'''
+#  if data_version == 3:
+#    A = '''
+#* **Testing type**: Genetic Algorithm for parameter space (Temp: 70-125C, Laser power: 150-700 μW, Laser detuning: -20 to 10 GHz)
+#* **Notes**: 200 Samples (10 population for 20 loops)'''    
+#  if data_version == 1:
+#    A = '''
+#* **Testing type**: Genetic Algorithm for parameter space (Temp: 100-130C, Laser power: 350-800 μW, Laser detuning: 0-10 GHz)
+#* **Notes**: 50 Samples (10 population for 5 loops) '''
+#  if data_version ==4:
+#    A = '''
+#* **Testing type**: Gradient search for parameter space (Temp: 100-130C, Laser power: 350-800 μW, Laser detuning: 0-10 GHz)
+#* **Notes**: 20 resolution for 3 axis * 3 loops '''  
+#  if data_version == 5:
+#    A = '''
+#* **Testing type**: Systematic search for parameter space (Temp: 75-125C, Laser power: 500-1200 μW, Laser detuning: -20 to 10 GHz)
+#* **Notes**: 8*8*8 full systematic search '''      
+#  return A
 
 ## Callback for selected data text ################
 ## Call back for text under graph
