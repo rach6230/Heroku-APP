@@ -10,6 +10,7 @@ import plotly.express as px
 tabtitle='SERF: Parameter Space Testing'
 
 
+
 #### Import Fit Data
 ##v1
 ALL_data_fit_values = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/Full_fit_Data.csv')
@@ -42,6 +43,8 @@ ALL_data_fit_values_v17 = pd.read_csv('https://raw.githubusercontent.com/rach623
 ALL_data_fit_values_v18 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/10-05-21-Full_fit_Data.csv')
 ALL_data_fit_values_v19 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/01-06-21-Full_fit_Data.csv')
 ALL_data_fit_values_v20 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/01-06-21-LABVIEW-Full_fit_Data.csv')
+ALL_data_fit_values_v21 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/23-06-21-Full_fit_Data.csv')
+
 
 #ALL_data_fit_values_v18 = pd.read_csv('')
 
@@ -87,13 +90,13 @@ ALL_data_fit_values_v17["V/nT"] =  abs(ALL_data_fit_values_v17['A(1D)'])/abs(ALL
 ALL_data_fit_values_v18["V/nT"] =  abs(ALL_data_fit_values_v18['A(1D)'])/abs(ALL_data_fit_values_v18['G(1D)'])
 ALL_data_fit_values_v19["V/nT"] =  abs(ALL_data_fit_values_v19['A(1D)'])/abs(ALL_data_fit_values_v19['G(1D)'])
 ALL_data_fit_values_v20["V/nT"] =  abs(ALL_data_fit_values_v20['A(1D)'])/abs(ALL_data_fit_values_v20['G(1D)'])
-
+ALL_data_fit_values_v21["V/nT"] =  abs(ALL_data_fit_values_v21['A(1D)'])/abs(ALL_data_fit_values_v21['G(1D)'])
 # list of all data frames
 all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, ALL_data_fit_values_v8,
         ALL_data_fit_values_v9, ALL_data_fit_values_v10, ALL_data_fit_values_v11, ALL_data_fit_values_v12, 
         ALL_data_fit_values_v13,ALL_data_fit_values_v14, ALL_data_fit_values, ALL_data_fit_values_v2, ALL_data_fit_values_v3,
         ALL_data_fit_values_v4, ALL_data_fit_values_v15, ALL_data_fit_values_v16, ALL_data_fit_values_v17, 
-        ALL_data_fit_values_v18,ALL_data_fit_values_v19, ALL_data_fit_values_v20]
+        ALL_data_fit_values_v18,ALL_data_fit_values_v19, ALL_data_fit_values_v20, ALL_data_fit_values_v21]
   
 
 ## Load data for sliders/ tables
@@ -164,6 +167,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.title=tabtitle
 
+
 ########### Set up the layout
 app.layout = html.Div(children=[
   html.Div(className='row',  # Define the row elemen
@@ -220,8 +224,9 @@ app.layout = html.Div(children=[
                                 {'label': 'V2: Gradient, V/nT (492 sample, 07-05-21)', 'value':16},
                                 {'label': 'V2: Gradient, sensitivity (492 sample, 09-05-21)', 'value':15},
                                 {'label': 'V2: GA, V/nT (500 sample, 10-05-21)', 'value':17},
-                                {'label': 'V2: Systematic Testing (sample 3375, 01-06-21) (MATLAB fit)', 'value': 18},
-                                {'label': 'V2: Systematic Testing (sample 3375, 01-06-21) (LABIVEW fit)', 'value': 19}
+                                {'label': 'V2: Systematic Testing (sample 3375, 01-06-21)', 'value': 18},
+                                #{'label': 'V2: Systematic Testing (sample 3375, 01-06-21) (LABIVEW fit)', 'value': 19},
+                                {'label': 'V2: Systematic Testing (sample 1350, 23-06-21) ', 'value': 20}
                             ],
                             value=2
                         ), 
@@ -351,7 +356,7 @@ app.layout = html.Div(children=[
 def update_figure(data_version):
   if data_version == 0 or data_version == 1 or data_version ==2 or data_version ==3 or data_version == 4 or data_version ==5 or data_version == 10 or data_version == 11 or data_version == 12 or data_version == 13 :        
     A = 'Scan Type = 3D'
-  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17or data_version == 18 or data_version == 19:  
+  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17or data_version == 18 or data_version == 19or data_version == 20:  
     A = 'Scan Type = 2D/1D'
   return A
 
@@ -1205,7 +1210,7 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, col, data_version, G1_min, G1_
   fig = px.scatter_3d(filtered_df, y=temp, z=ld, x=lp, color=col)  
   fig.update_layout(margin={'l': 0, 'b': 0, 't': 30, 'r': 0}, hovermode='closest')
   fig.update_layout(transition_duration=500)
-  fig.update_layout(height=400)
+  fig.update_layout(height=500)
   fig.update_layout(scene = dict(
                     xaxis_title='Laser Power (μW)',
                     yaxis_title='Temperature (°C)',
