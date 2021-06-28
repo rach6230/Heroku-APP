@@ -812,13 +812,14 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, data_version, x_value, y_value
   fig.update_layout(height=300)  
   return fig
 ######## Call backs for sensitivity plot ################
+######## Call backs for sensitivity plot ################
 @app.callback(
     Output('radioitems-sensitivity-container', 'children'),
     Input('HanleScanType', 'children'),
     Input('segselect', 'value'))
 def update_figure(scan_type, data_version):
     if scan_type == 'Scan Type = 2D/1D': 
-        if data_version== 14 or data_version== 15 or data_version== 16 or data_version== 17 or data_version== 18 or data_version== 19: 
+        if data_version== 14 or data_version== 15 or data_version== 16 or data_version== 17 or data_version== 18 or data_version== 19 or data_version== 20 or data_version== 21: 
             A = dcc.RadioItems(
                 id='value_dropdown_1D_sensitivity',
                 options=[{"label": i, "value": i} for i in ["Hanle Single Axis", "Sensitivity"]],
