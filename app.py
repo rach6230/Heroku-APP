@@ -9,8 +9,6 @@ import plotly.express as px
 ########### Define your variables
 tabtitle='SERF: Parameter Space Testing'
 
-
-
 #### Import Fit Data
 ##v1
 ALL_data_fit_values = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/Full_fit_Data.csv')
@@ -45,8 +43,9 @@ ALL_data_fit_values_v19 = pd.read_csv('https://raw.githubusercontent.com/rach623
 ALL_data_fit_values_v20 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/01-06-21-LABVIEW-Full_fit_Data.csv')
 ALL_data_fit_values_v21 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/23-06-21-Full_fit_Data.csv')
 ALL_data_fit_values_v22 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/26-06-21-Full_fit_Data.csv')
+ALL_data_fit_values_v23 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/06-08-21-Full_fit_Data.csv')
 
-#ALL_data_fit_values_v18 = pd.read_csv('')
+#ALL_data_fit_values_v = pd.read_csv('')
 
 
 # Create col of A/C:
@@ -92,12 +91,15 @@ ALL_data_fit_values_v19["V/nT"] =  abs(ALL_data_fit_values_v19['A(1D)'])/abs(ALL
 ALL_data_fit_values_v20["V/nT"] =  abs(ALL_data_fit_values_v20['A(1D)'])/abs(ALL_data_fit_values_v20['G(1D)'])
 ALL_data_fit_values_v21["V/nT"] =  abs(ALL_data_fit_values_v21['A(1D)'])/abs(ALL_data_fit_values_v21['G(1D)'])
 ALL_data_fit_values_v22["V/nT"] =  abs(ALL_data_fit_values_v22['A(1D)'])/abs(ALL_data_fit_values_v22['G(1D)'])
+ALL_data_fit_values_v23["V/nT"] =  abs(ALL_data_fit_values_v23['A(1D)'])/abs(ALL_data_fit_values_v23['G(1D)'])
+
 # list of all data frames
 all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, ALL_data_fit_values_v8,
         ALL_data_fit_values_v9, ALL_data_fit_values_v10, ALL_data_fit_values_v11, ALL_data_fit_values_v12, 
         ALL_data_fit_values_v13,ALL_data_fit_values_v14, ALL_data_fit_values, ALL_data_fit_values_v2, ALL_data_fit_values_v3,
         ALL_data_fit_values_v4, ALL_data_fit_values_v15, ALL_data_fit_values_v16, ALL_data_fit_values_v17, 
-        ALL_data_fit_values_v18,ALL_data_fit_values_v19, ALL_data_fit_values_v20, ALL_data_fit_values_v21, ALL_data_fit_values_v22]
+        ALL_data_fit_values_v18,ALL_data_fit_values_v19, ALL_data_fit_values_v20, ALL_data_fit_values_v21, ALL_data_fit_values_v22,
+        ALL_data_fit_values_v23]
   
 
 ## Load data for sliders/ tables
@@ -137,14 +139,16 @@ Github_urls_v19 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_a
 Github_urls_v20 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/01-06-21_Github_urls_sorted.csv")
 Github_urls_v21 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/23-06-21_Github_urls_sorted.csv")
 Github_urls_v22 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/26-06-21_Github_urls_sorted.csv")
-#Github_urls_v18 = pd.read_csv("")
+Github_urls_v23 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/06-08-21_Github_urls_sorted.csv")
+#Github_urls_v = pd.read_csv("")
 
     
 # list of all data frames
 all_git_df=[Github_urls_v5, Github_urls_v6, Github_urls_v7, Github_urls_v8,Github_urls_v9,
             Github_urls_v10, Github_urls_v11, Github_urls_v12, Github_urls_v13, Github_urls_v14,
             Github_urls_v1, Github_urls_v2, Github_urls_v3, Github_urls_v4, Github_urls_v15, Github_urls_v16,
-            Github_urls_v17,Github_urls_v18, Github_urls_v19, Github_urls_v20, Github_urls_v21, Github_urls_v22]
+            Github_urls_v17,Github_urls_v18, Github_urls_v19, Github_urls_v20, Github_urls_v21, Github_urls_v22,
+            Github_urls_v23]
 
 
 # Inital data to show (selected point)
@@ -161,7 +165,6 @@ colors = {
 #* **Cell**: Cs
 #* **Coil Drivers**: DAQ
 #* **Heater Driver**: MOSFET, 150kHz, square
-#* **Heaters**: 1 x 8 Ohm (non-magnetic)'''
 #* **Heaters**: 1 x 8 Ohm (non-magnetic)'''
 
 ########### Initiate the app
@@ -229,7 +232,8 @@ app.layout = html.Div(children=[
                                 {'label': 'V2: Systematic Testing (sample 3375, 01-06-21)', 'value': 18},
                                 #{'label': 'V2: Systematic Testing (sample 3375, 01-06-21) (LABIVEW fit)', 'value': 19},
                                 {'label': 'V2: Systematic Testing (sample 1350, 23-06-21) ', 'value': 20},
-                                {'label': 'V2: Systematic Testing (sample 363, 26-06-21, new PCB) ', 'value': 21}
+                                {'label': 'V2: Systematic Testing (sample 363, 26-06-21, new PCB) ', 'value': 21},
+                                {'label': 'V2: PD benchmark v1 Gradient (36 sample, 06-08-21)', 'value': 22}
                                 
                             ],
                             value=2
@@ -360,7 +364,7 @@ app.layout = html.Div(children=[
 def update_figure(data_version):
   if data_version == 0 or data_version == 1 or data_version ==2 or data_version ==3 or data_version == 4 or data_version ==5 or data_version == 10 or data_version == 11 or data_version == 12 or data_version == 13 :        
     A = 'Scan Type = 3D'
-  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17or data_version == 18 or data_version == 19 or data_version == 20 or data_version == 21:  
+  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17or data_version == 18 or data_version == 19 or data_version == 20 or data_version == 21or data_version == 22:  
     A = 'Scan Type = 2D/1D'
   return A
 
@@ -812,14 +816,13 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, data_version, x_value, y_value
   fig.update_layout(height=300)  
   return fig
 ######## Call backs for sensitivity plot ################
-######## Call backs for sensitivity plot ################
 @app.callback(
     Output('radioitems-sensitivity-container', 'children'),
     Input('HanleScanType', 'children'),
     Input('segselect', 'value'))
 def update_figure(scan_type, data_version):
     if scan_type == 'Scan Type = 2D/1D': 
-        if data_version== 14 or data_version== 15 or data_version== 16 or data_version== 17 or data_version== 18 or data_version== 19 or data_version== 20 or data_version== 21: 
+        if data_version== 14 or data_version== 15 or data_version== 16 or data_version== 17 or data_version== 18 or data_version== 19 or data_version== 20 or data_version== 21 or data_version== 22: 
             A = dcc.RadioItems(
                 id='value_dropdown_1D_sensitivity',
                 options=[{"label": i, "value": i} for i in ["Hanle Single Axis", "Sensitivity"]],
@@ -933,7 +936,7 @@ def update_figure(clickData, data_version, scan_type):
             df =df.iloc[1:]
             df.reset_index(drop=True, inplace=True)   
             df.columns = ["a","b","a2","gg","f", "Frequency (Hz)", "Photodiode Voltage (V)", "c","d", "e"]  
-        if  data_version ==20 or data_version ==21:
+        if  data_version ==20 or data_version ==21 or data_version ==22:
             df.columns = df.iloc[0]
             df =df.iloc[1:]
             df.reset_index(drop=True, inplace=True)   
@@ -1409,7 +1412,7 @@ def update_figure(clickData, data_version, scan_type):
         df =df.iloc[1:]
         if data_version == 14 or data_version == 15 or data_version ==16 or data_version ==17or data_version ==18 or data_version ==19: 
             df_2d = df.iloc[0:960, 0:3] #2D data 
-        if data_version == 20 or data_version == 21: 
+        if data_version == 20 or data_version == 21 or data_version == 22: 
             df_2d = df.iloc[0:2500, 0:3] #2D data                   
         else :
             df_2d = df.iloc[0:441, 0:3] #2D data       
@@ -1458,7 +1461,7 @@ def update_figure(clickData, data_version, scan_type):
             df_1d = df_1d.rename(columns={"Photodiode Voltage (V)" : "Y  Field (nT)","Frequency (Hz)" : "Photodiode Voltage (V)"})
         if data_version ==15 or data_version ==16 or data_version ==17 or data_version ==18 or data_version ==19:
             df_1d = df.iloc[0:100, 3:5] # 3D data  
-        if data_version ==20 or data_version ==21:
+        if data_version ==20 or data_version ==21 or data_version ==22:
             df_1d = df.iloc[0:200, 3:5] # 3D data             
         else:
             df_1d = df.iloc[0:51, 4:6] # 3D data
@@ -1708,5 +1711,6 @@ def display_click_data(clickData2, clickData, data_version, scan_type):
         fig.update_layout(height=150)
         fig.update_layout(font=dict(size=8)) # Change font size
         return fig  
+
 if __name__ == '__main__':
     app.run_server()
