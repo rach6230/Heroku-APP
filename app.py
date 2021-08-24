@@ -1223,7 +1223,11 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, col, data_version, G1_min, G1_
   fig = px.scatter_3d(filtered_df, y=temp, z=ld, x=lp, color=col)  
   fig.update_layout(margin={'l': 0, 'b': 0, 't': 30, 'r': 0}, hovermode='closest')
   fig.update_layout(transition_duration=500)
-  fig.update_layout(height=600)
+  fig.update_layout(height=500)
+  camera = dict(
+      center=dict(x=0.1, y=0, z=-0.1),
+  )
+  fig.update_layout(scene_camera=camera)
   fig.update_layout(scene = dict(
                     xaxis_title='Laser Power (μW)',
                     yaxis_title='Temperature (°C)',
