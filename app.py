@@ -10,7 +10,6 @@ import plotly.express as px
 tabtitle='SERF: Parameter Space Testing'
 
 
-
 #### Import Fit Data
 ##v1
 ALL_data_fit_values = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_Systematic_Testing/main/Full_fit_Data.csv')
@@ -48,6 +47,7 @@ ALL_data_fit_values_v22 = pd.read_csv('https://raw.githubusercontent.com/rach623
 ALL_data_fit_values_v23 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/06-08-21-Full_fit_Data.csv')
 ALL_data_fit_values_v24 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/25-08-21-Full_fit_Data.csv')
 ALL_data_fit_values_v25 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/30-08-21-Full_fit_Data.csv')
+ALL_data_fit_values_v26 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/18-05-21-Full_fit_Data.csv')
 #ALL_data_fit_values_v = pd.read_csv('')
 
 
@@ -97,6 +97,7 @@ ALL_data_fit_values_v22["V/nT"] =  abs(ALL_data_fit_values_v22['A(1D)'])/abs(ALL
 ALL_data_fit_values_v23["V/nT"] =  abs(ALL_data_fit_values_v23['A(1D)'])/abs(ALL_data_fit_values_v23['G(1D)'])
 ALL_data_fit_values_v24["V/nT"] =  abs(ALL_data_fit_values_v24['A(1D)'])/abs(ALL_data_fit_values_v24['G(1D)'])
 ALL_data_fit_values_v25["V/nT"] =  abs(ALL_data_fit_values_v25['A(1D)'])/abs(ALL_data_fit_values_v25['G(1D)'])
+ALL_data_fit_values_v26["V/nT"] =  abs(ALL_data_fit_values_v26['A(1D)'])/abs(ALL_data_fit_values_v26['G(1D)'])
 
 # list of all data frames
 all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, ALL_data_fit_values_v8,
@@ -104,7 +105,7 @@ all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, AL
         ALL_data_fit_values_v13,ALL_data_fit_values_v14, ALL_data_fit_values, ALL_data_fit_values_v2, ALL_data_fit_values_v3,
         ALL_data_fit_values_v4, ALL_data_fit_values_v15, ALL_data_fit_values_v16, ALL_data_fit_values_v17, 
         ALL_data_fit_values_v18,ALL_data_fit_values_v19, ALL_data_fit_values_v20, ALL_data_fit_values_v21, ALL_data_fit_values_v22,
-        ALL_data_fit_values_v23,ALL_data_fit_values_v24,ALL_data_fit_values_v25]
+        ALL_data_fit_values_v23,ALL_data_fit_values_v24,ALL_data_fit_values_v25, ALL_data_fit_values_v26]
   
 
 ## Load data for sliders/ tables
@@ -181,6 +182,7 @@ server = app.server
 app.title=tabtitle
 
 
+
 ########### Set up the layout
 app.layout = html.Div(children=[
   html.Div(className='row',  # Define the row elemen
@@ -237,6 +239,7 @@ app.layout = html.Div(children=[
                                 {'label': 'V2: Gradient, V/nT (492 sample, 07-05-21)', 'value':16},
                                 {'label': 'V2: Gradient, sensitivity (492 sample, 09-05-21)', 'value':15},
                                 {'label': 'V2: GA, V/nT (500 sample, 10-05-21)', 'value':17},
+                                {'label': 'V2: MLOOP, V/nT (500 sample, 18-05-21)', 'value':25},
                                 {'label': 'V2: Systematic Testing (sample 3375, 01-06-21)', 'value': 18},
                                 #{'label': 'V2: Systematic Testing (sample 3375, 01-06-21) (LABIVEW fit)', 'value': 19},
                                 {'label': 'V2: Systematic Testing (sample 1350, 23-06-21) ', 'value': 20},
@@ -374,7 +377,7 @@ app.layout = html.Div(children=[
 def update_figure(data_version):
   if data_version == 0 or data_version == 1 or data_version ==2 or data_version ==3 or data_version == 4 or data_version ==5 or data_version == 10 or data_version == 11 or data_version == 12 or data_version == 13 :        
     A = 'Scan Type = 3D'
-  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17or data_version == 18 or data_version == 19 or data_version == 20 or data_version == 21 or data_version == 22 or data_version == 23 or data_version == 24:  
+  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17 or data_version == 25 or data_version == 18 or data_version == 19 or data_version == 20 or data_version == 21 or data_version == 22 or data_version == 23 or data_version == 24:  
     A = 'Scan Type = 2D/1D'
   return A
 
@@ -936,7 +939,7 @@ def update_figure(clickData, data_version, scan_type):
             df =df.iloc[1:]
             df = df.iloc[0:25000, 7:9] # 3D data
             df = df.rename(columns={"Heater Current (A)" : "Frequency (Hz)" ,"Temperature (C)" : "Photodiode Voltage (V)"})
-        if data_version ==15 or data_version ==16 or data_version ==17 :
+        if data_version ==15 or data_version ==16 or data_version ==17 or data_version == 25 :
             df.columns = df.iloc[0]
             df =df.iloc[1:]
             df.reset_index(drop=True, inplace=True)   
@@ -1005,7 +1008,7 @@ def update_figure(clickData, data_version, scan_type):
             df =df.iloc[1:]
             df = df.iloc[0:25000, 7:9] # 3D data
             df = df.rename(columns={"Heater Current (A)" : "Frequency (Hz)" ,"Temperature (C)" : "Photodiode Voltage (V)"})
-        if data_version ==15 or data_version ==16 or data_version ==17 or data_version ==18 or data_version ==19:
+        if data_version ==15 or data_version ==16 or data_version ==17 or data_version ==18 or data_version ==19 or data_version == 25:
             df.columns = df.iloc[0]
             df =df.iloc[1:]
             df.reset_index(drop=True, inplace=True)   
@@ -1424,7 +1427,7 @@ def update_figure(clickData, data_version, scan_type):
         df = pd.read_table(data_url, index_col=False)
         df.columns = df.iloc[0]
         df =df.iloc[1:]
-        if data_version == 14 or data_version == 15 or data_version ==16 or data_version ==17or data_version ==18 or data_version ==19: 
+        if data_version == 14 or data_version == 15 or data_version ==16 or data_version ==17 or data_version == 25 or data_version ==18 or data_version ==19: 
             df_2d = df.iloc[0:960, 0:3] #2D data 
         if data_version == 20 or data_version == 21 or data_version == 22 or data_version ==23 or data_version== 24: 
             df_2d = df.iloc[0:2500, 0:3] #2D data                   
@@ -1473,7 +1476,7 @@ def update_figure(clickData, data_version, scan_type):
         if data_version ==14:
             df_1d = df.iloc[0:50, 4:6] # 3D data
             df_1d = df_1d.rename(columns={"Photodiode Voltage (V)" : "Y  Field (nT)","Frequency (Hz)" : "Photodiode Voltage (V)"})
-        if data_version ==15 or data_version ==16 or data_version ==17 or data_version ==18 or data_version ==19:
+        if data_version ==15 or data_version ==16 or data_version ==17 or data_version ==18 or data_version ==19 or data_version == 25:
             df_1d = df.iloc[0:100, 3:5] # 3D data  
         if data_version ==20 or data_version ==21 or data_version ==22 or data_version ==23 or data_version== 24:
             df_1d = df.iloc[0:200, 3:5] # 3D data             
