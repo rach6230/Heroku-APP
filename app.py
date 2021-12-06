@@ -7,6 +7,8 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 
 ########### Define your variables
+tabtitle='SERF: Parameter Space Testing'
+
 
 #### Import Fit Data
 ##v1
@@ -46,11 +48,6 @@ ALL_data_fit_values_v23 = pd.read_csv('https://raw.githubusercontent.com/rach623
 ALL_data_fit_values_v24 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/25-08-21-Full_fit_Data.csv')
 ALL_data_fit_values_v25 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/30-08-21-Full_fit_Data.csv')
 ALL_data_fit_values_v26 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/18-05-21-Full_fit_Data.csv')
-
-#Cs
-ALL_data_fit_values_v27 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/30-11-21-Full_fit_Data.csv')
-ALL_data_fit_values_v28 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/02-12-21-Full_fit_Data.csv')
-ALL_data_fit_values_v29 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/05-12-21-Full_fit_Data.csv')
 #ALL_data_fit_values_v = pd.read_csv('')
 
 
@@ -102,19 +99,13 @@ ALL_data_fit_values_v24["V/nT"] =  abs(ALL_data_fit_values_v24['A(1D)'])/abs(ALL
 ALL_data_fit_values_v25["V/nT"] =  abs(ALL_data_fit_values_v25['A(1D)'])/abs(ALL_data_fit_values_v25['G(1D)'])
 ALL_data_fit_values_v26["V/nT"] =  abs(ALL_data_fit_values_v26['A(1D)'])/abs(ALL_data_fit_values_v26['G(1D)'])
 
-##Cs
-ALL_data_fit_values_v27["V/nT"] =  abs(ALL_data_fit_values_v27['A(1D)'])/abs(ALL_data_fit_values_v27['G(1D)'])
-ALL_data_fit_values_v28["V/nT"] =  abs(ALL_data_fit_values_v28['A(1D)'])/abs(ALL_data_fit_values_v28['G(1D)'])
-ALL_data_fit_values_v29["V/nT"] =  abs(ALL_data_fit_values_v29['A(1D)'])/abs(ALL_data_fit_values_v29['G(1D)'])
-
 # list of all data frames
 all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, ALL_data_fit_values_v8,
         ALL_data_fit_values_v9, ALL_data_fit_values_v10, ALL_data_fit_values_v11, ALL_data_fit_values_v12, 
         ALL_data_fit_values_v13,ALL_data_fit_values_v14, ALL_data_fit_values, ALL_data_fit_values_v2, ALL_data_fit_values_v3,
         ALL_data_fit_values_v4, ALL_data_fit_values_v15, ALL_data_fit_values_v16, ALL_data_fit_values_v17, 
         ALL_data_fit_values_v18,ALL_data_fit_values_v19, ALL_data_fit_values_v20, ALL_data_fit_values_v21, ALL_data_fit_values_v22,
-        ALL_data_fit_values_v23,ALL_data_fit_values_v24,ALL_data_fit_values_v25, ALL_data_fit_values_v26,
-        ALL_data_fit_values_v27,ALL_data_fit_values_v28,ALL_data_fit_values_v29]
+        ALL_data_fit_values_v23,ALL_data_fit_values_v24,ALL_data_fit_values_v25, ALL_data_fit_values_v26]
   
 
 ## Load data for sliders/ tables
@@ -157,21 +148,15 @@ Github_urls_v22 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_a
 Github_urls_v23 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/06-08-21_Github_urls_sorted.csv")
 Github_urls_v24 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/25-08-21_Github_urls_sorted.csv")
 Github_urls_v25 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/30-08-21_Github_urls_sorted.csv")
-Github_urls_v26 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/30-08-21_Github_urls_sorted.csv")
-
-#Cs
-Github_urls_v27 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/30-11-21_Github_urls_sorted.csv")
-Github_urls_v28 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/02-12-21_Github_urls_sorted.csv")
-Github_urls_v29 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/05-12-21_Github_urls_sorted.csv")
 #Github_urls_v = pd.read_csv("")
 
+    
 # list of all data frames
 all_git_df=[Github_urls_v5, Github_urls_v6, Github_urls_v7, Github_urls_v8,Github_urls_v9,
             Github_urls_v10, Github_urls_v11, Github_urls_v12, Github_urls_v13, Github_urls_v14,
             Github_urls_v1, Github_urls_v2, Github_urls_v3, Github_urls_v4, Github_urls_v15, Github_urls_v16,
             Github_urls_v17,Github_urls_v18, Github_urls_v19, Github_urls_v20, Github_urls_v21, Github_urls_v22,
-            Github_urls_v23,Github_urls_v24,Github_urls_v25,Github_urls_v26,Github_urls_v27,
-            Github_urls_v28, Github_urls_v29]
+            Github_urls_v23,Github_urls_v24,Github_urls_v25]
 
 
 # Inital data to show (selected point)
@@ -232,17 +217,40 @@ app.layout = html.Div(children=[
                      ),  # Define the 1st column
              html.Div(className='five columns div-for-charts',
                       children = [
-                        html.H6('All Parameter Space Data'),
-                        html.Div("Atomic Species:", style={'fontSize': 12}),
-                        dcc.RadioItems(id='atomic_species_radioitem',
-                                       options=[{"label": i, "value": i} for i in ["Cs", "Rb"]],
-                                       value='Cs',
-                                       inputStyle={"margin-left": "20px"}, # add space between radio items
-                                       labelStyle={'display': 'inline-block'},
-                                       style={'fontSize': 12}), 
-                        html.Div("Data Set", style={'fontSize': 12}), 
-                        html.Div(id="dataset_dropdown_container"),   
-                        html.Div("Fit Values:", style={'fontSize': 12}),    
+                        html.H6('Version 2: All Parameter Space Data'),
+                        dcc.Dropdown(
+                            id='segselect',
+                            options=[
+                                {'label': 'V1: Systematic Testing V1', 'value': 10},
+                                {'label': 'V1: Systematic Testing V2', 'value': 11},
+                                {'label': 'V1: M-LOOP V1', 'value': 12},
+                                {'label': 'V1: M-LOOP V2', 'value': 13},                            
+                                {'label': 'V2: M-LOOP (166 Loop, 04-03-21)', 'value': 0},
+                                {'label': 'V2: GA (50 sample, 08-03-21)', 'value': 1},
+                                {'label': 'V2: M-LOOP (500 sample, 12-03-21)', 'value': 2},
+                                {'label': 'V2: GA (200 sample, 14-03-21)', 'value': 3},  
+                                {'label': 'V2: Gradient (189 sample, 15-03-21)', 'value':4},    
+                                {'label': 'V2: Systematic (512 sample, 02-04-21)', 'value': 5}, 
+                                {'label': 'V2: GA (500 sample, 10-04-21)', 'value':7}, 
+                                {'label': 'V2: Gradient (492 sample, 11-04-21)', 'value':6}, 
+                                {'label': 'V2: GA (500 sample, 19-04-21)', 'value':8}, 
+                                {'label': 'V2: GA (500 sample, 21-04-21)', 'value':9},
+                                {'label': 'V2: GA (250 sample, 26-04-21)', 'value':14},
+                                {'label': 'V2: Gradient, V/nT (492 sample, 07-05-21)', 'value':16},
+                                {'label': 'V2: Gradient, sensitivity (492 sample, 09-05-21)', 'value':15},
+                                {'label': 'V2: GA, V/nT (500 sample, 10-05-21)', 'value':17},
+                                {'label': 'V2: MLOOP, V/nT (500 sample, 18-05-21)', 'value':25},
+                                {'label': 'V2: Systematic Testing (sample 3375, 01-06-21)', 'value': 18},
+                                #{'label': 'V2: Systematic Testing (sample 3375, 01-06-21) (LABIVEW fit)', 'value': 19},
+                                {'label': 'V2: Systematic Testing (sample 1350, 23-06-21) ', 'value': 20},
+                                {'label': 'V2: Systematic Testing (sample 363, 26-06-21, new PCB) ', 'value': 21},
+                                {'label': 'V2: PD benchmark v1 Gradient (36 sample, 06-08-21)', 'value': 22},
+                                {'label': 'V2: PD benchmark v2 Gradient (36 sample, 25-08-21)', 'value': 23},
+                                {'label': 'V2: Systematic (144 sample, 30-08-21)', 'value': 24}
+                                
+                            ],
+                            value=2
+                        ), 
                         html.Div(id="value_dropdown_container"),                                  
                         dcc.Graph(id='graph-with-slider',config={'displayModeBar': True}),
                         html.Br(), #new line
@@ -369,7 +377,7 @@ app.layout = html.Div(children=[
 def update_figure(data_version):
   if data_version == 0 or data_version == 1 or data_version ==2 or data_version ==3 or data_version == 4 or data_version ==5 or data_version == 10 or data_version == 11 or data_version == 12 or data_version == 13 :        
     A = 'Scan Type = 3D'
-  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17 or data_version == 25 or data_version == 18 or data_version == 19 or data_version == 20 or data_version == 21 or data_version == 22 or data_version == 23 or data_version == 24 or data_version == 26  or data_version == 27  or data_version == 28:  
+  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17 or data_version == 25 or data_version == 18 or data_version == 19 or data_version == 20 or data_version == 21 or data_version == 22 or data_version == 23 or data_version == 24:  
     A = 'Scan Type = 2D/1D'
   return A
 
@@ -457,53 +465,7 @@ def display_click_data(data_version, scan_type):
                       value='',
                       style={'fontSize': 12}),           
   return A
-############ Callbacks for radio element of Dataset selection #############################
-@app.callback(Output('dataset_dropdown_container', 'children'),
-              Input('atomic_species_radioitem', 'value'))
-def display_click_data(species):
-  if species == 'Cs':
-    A = dcc.Dropdown(
-        id='segselect',
-        options=[
-            {'label': 'V1: Systematic Testing V1', 'value': 10},
-            {'label': 'V1: Systematic Testing V2', 'value': 11},
-            {'label': 'V1: M-LOOP V1', 'value': 12},
-            {'label': 'V1: M-LOOP V2', 'value': 13},                            
-            {'label': 'V2: M-LOOP (166 Loop, 04-03-21)', 'value': 0},
-            {'label': 'V2: GA (50 sample, 08-03-21)', 'value': 1},
-            {'label': 'V2: M-LOOP (500 sample, 12-03-21)', 'value': 2},
-            {'label': 'V2: GA (200 sample, 14-03-21)', 'value': 3},  
-            {'label': 'V2: Gradient (189 sample, 15-03-21)', 'value':4},    
-            {'label': 'V2: Systematic (512 sample, 02-04-21)', 'value': 5}, 
-            {'label': 'V2: GA (500 sample, 10-04-21)', 'value':7}, 
-            {'label': 'V2: Gradient (492 sample, 11-04-21)', 'value':6}, 
-            {'label': 'V2: GA (500 sample, 19-04-21)', 'value':8}, 
-            {'label': 'V2: GA (500 sample, 21-04-21)', 'value':9},
-            {'label': 'V2: GA (250 sample, 26-04-21)', 'value':14},
-            {'label': 'V2: Gradient, V/nT (492 sample, 07-05-21)', 'value':16},
-            {'label': 'V2: Gradient, sensitivity (492 sample, 09-05-21)', 'value':15},
-            {'label': 'V2: GA, V/nT (500 sample, 10-05-21)', 'value':17},
-            {'label': 'V2: MLOOP, V/nT (500 sample, 18-05-21)', 'value':25},
-            {'label': 'V2: Systematic Testing (sample 3375, 01-06-21)', 'value': 18},
-            #{'label': 'V2: Systematic Testing (sample 3375, 01-06-21) (LABIVEW fit)', 'value': 19},
-            {'label': 'V2: Systematic Testing (sample 1350, 23-06-21) ', 'value': 20},
-            {'label': 'V2: Systematic Testing (sample 363, 26-06-21, new PCB) ', 'value': 21},
-            {'label': 'V2: PD benchmark v1 Gradient (36 sample, 06-08-21)', 'value': 22},
-            {'label': 'V2: PD benchmark v2 Gradient (36 sample, 25-08-21)', 'value': 23},
-            {'label': 'V2: Systematic (144 sample, 30-08-21)', 'value': 24}
 
-        ],
-        value=2)
-  if species == 'Rb':
-        A = dcc.Dropdown(
-        id='segselect',
-        options=[
-            {'label': 'V1: Systematic, Temp vs Detuning (198 sample, 29-11-21)', 'value': 26},
-            {'label': 'V1: Systematic, PID Temp vs Detuning (112 sample, 02-12-21)', 'value': 27},
-            {'label': 'V1: Systematic, 3D (786 sample, 05-12-21)', 'value': 28}
-        ],
-        value=26)     
-  return A
 ############ Callbacks for radio element of 3D graph #############################
 @app.callback(Output('value_dropdown_container', 'children'),
               Input('segselect', 'value'),
@@ -873,8 +835,7 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, data_version, x_value, y_value
     Input('segselect', 'value'))
 def update_figure(scan_type, data_version):
     if scan_type == 'Scan Type = 2D/1D': 
-        # Includes sensitivity data
-        if data_version== 14 or data_version== 15 or data_version== 16 or data_version== 17 or data_version== 18 or data_version== 19 or data_version== 20 or data_version== 21 or data_version== 22 or data_version== 23 or data_version== 24 or data_version == 26 or data_version == 27 or data_version == 28: 
+        if data_version== 14 or data_version== 15 or data_version== 16 or data_version== 17 or data_version== 18 or data_version== 19 or data_version== 20 or data_version== 21 or data_version== 22 or data_version== 23 or data_version== 24: 
             A = dcc.RadioItems(
                 id='value_dropdown_1D_sensitivity',
                 options=[{"label": i, "value": i} for i in ["Hanle Single Axis", "Sensitivity"]],
@@ -883,16 +844,6 @@ def update_figure(scan_type, data_version):
                 labelStyle={'display': 'inline-block'},
                 style={'fontSize': 12}
             ), 
-        # No sensitivity data:    
-        if data_version == 26 or data_version == 27 or data_version == 28: 
-            A = dcc.RadioItems(
-                id='value_dropdown_1D_sensitivity',
-                options=[{"label": i, "value": i} for i in ["Hanle Single Axis"]],
-                value='Hanle Single Axis',
-                inputStyle={"margin-left": "20px"}, # add space between radio items
-                labelStyle={'display': 'inline-block'},
-                style={'fontSize': 12}
-            ),     
         else:
             A = dcc.RadioItems(
                 id='value_dropdown_1D_sensitivity',
@@ -998,7 +949,7 @@ def update_figure(clickData, data_version, scan_type):
             df =df.iloc[1:]
             df.reset_index(drop=True, inplace=True)   
             df.columns = ["a","b","a2","gg","f", "Frequency (Hz)", "Photodiode Voltage (V)", "c","d", "e"]  
-        if  data_version ==20 or data_version ==21 or data_version ==22 or data_version ==23 or data_version== 24 or data_version == 26 or data_version == 27 or data_version == 28:
+        if  data_version ==20 or data_version ==21 or data_version ==22 or data_version ==23 or data_version== 24:
             df.columns = df.iloc[0]
             df =df.iloc[1:]
             df.reset_index(drop=True, inplace=True)   
@@ -1478,7 +1429,7 @@ def update_figure(clickData, data_version, scan_type):
         df =df.iloc[1:]
         if data_version == 14 or data_version == 15 or data_version ==16 or data_version ==17 or data_version == 25 or data_version ==18 or data_version ==19: 
             df_2d = df.iloc[0:960, 0:3] #2D data 
-        if data_version == 20 or data_version == 21 or data_version == 22 or data_version ==23 or data_version== 24 or data_version == 26 or data_version == 27 or data_version == 28: 
+        if data_version == 20 or data_version == 21 or data_version == 22 or data_version ==23 or data_version== 24: 
             df_2d = df.iloc[0:2500, 0:3] #2D data                   
         else :
             df_2d = df.iloc[0:441, 0:3] #2D data       
@@ -1490,7 +1441,7 @@ def update_figure(clickData, data_version, scan_type):
         fig.update_layout(font=dict(size=8)) # Change font size
         fig.layout.coloraxis.colorbar.title = 'PD (V)' 
         fig.update_traces(marker=dict(size=12)) # increase marker sizes
-        #fig.update_layout(xaxis=dict(scaleanchor='y', constrain='domain')) #Make axis equal (squares)
+        fig.update_layout(xaxis=dict(scaleanchor='y', constrain='domain')) #Make axis equal (squares)
         A = dcc.Graph(figure=fig, id='facet', config={'displayModeBar': False}),
         return A     
 
@@ -1527,7 +1478,7 @@ def update_figure(clickData, data_version, scan_type):
             df_1d = df_1d.rename(columns={"Photodiode Voltage (V)" : "Y  Field (nT)","Frequency (Hz)" : "Photodiode Voltage (V)"})
         if data_version ==15 or data_version ==16 or data_version ==17 or data_version ==18 or data_version ==19 or data_version == 25:
             df_1d = df.iloc[0:100, 3:5] # 3D data  
-        if data_version ==20 or data_version ==21 or data_version ==22 or data_version ==23 or data_version== 24 or data_version == 26 or data_version == 27 or data_version == 28:
+        if data_version ==20 or data_version ==21 or data_version ==22 or data_version ==23 or data_version== 24:
             df_1d = df.iloc[0:200, 3:5] # 3D data             
         else:
             df_1d = df.iloc[0:51, 4:6] # 3D data
@@ -1777,6 +1728,6 @@ def display_click_data(clickData2, clickData, data_version, scan_type):
         fig.update_layout(height=150)
         fig.update_layout(font=dict(size=8)) # Change font size
         return fig  
-
+    
 if __name__ == '__main__':
     app.run_server()
