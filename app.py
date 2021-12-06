@@ -105,8 +105,8 @@ ALL_data_fit_values_v26["V/nT"] =  abs(ALL_data_fit_values_v26['A(1D)'])/abs(ALL
 
 ##Cs
 ALL_data_fit_values_v27["V/nT"] =  abs(ALL_data_fit_values_v27['A(1D)'])/abs(ALL_data_fit_values_v27['G(1D)'])
-ALL_data_fit_values_v28["V/nT"] =  abs(ALL_data_fit_values_v28['A(1D)'])/abs(ALL_data_fit_values_v28['G(1D)'])
-ALL_data_fit_values_v29["V/nT"] =  abs(ALL_data_fit_values_v29['A(1D)'])/abs(ALL_data_fit_values_v29['G(1D)'])
+ALL_data_fit_values_v28["V/nT"] =  (abs(ALL_data_fit_values_v28['A(1D)'])*2)/abs(ALL_data_fit_values_v28['G(1D)'])
+ALL_data_fit_values_v29["V/nT"] =  (abs(ALL_data_fit_values_v29['A(1D)'])*2)/abs(ALL_data_fit_values_v29['G(1D)'])
 
 # list of all data frames
 all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, ALL_data_fit_values_v8,
@@ -196,9 +196,6 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.title=tabtitle
-
-
-
 
 ########### Set up the layout
 app.layout = html.Div(children=[
@@ -1485,6 +1482,8 @@ def update_figure(clickData, data_version, scan_type):
         else :
             df_2d = df.iloc[0:441, 0:3] #2D data       
         df_2d = df_2d.apply(pd.to_numeric)
+        if  data_version == 27 or data_version == 28: 
+            df_2d["Photodiode Voltage (V)"] =  df_2d["Photodiode Voltage (V)"]*2                 
         fig = px.scatter(df_2d, x="X  Field (nT)", y="Z  Field (nT)",
                          color="Photodiode Voltage (V)", color_continuous_scale='aggrnyl')      
         fig.update_layout(margin={'l': 0, 'b': 0, 't': 0, 'r': 0}, hovermode='closest') #Change margins        
@@ -1534,6 +1533,8 @@ def update_figure(clickData, data_version, scan_type):
         else:
             df_1d = df.iloc[0:51, 4:6] # 3D data
         df_1d = df_1d.apply(pd.to_numeric)
+        if  data_version == 27 or data_version == 28: 
+            df_1d["Photodiode Voltage (V)"] =  df_1d["Photodiode Voltage (V)"]*2 
         fig2 = px.line(df_1d, x="Y  Field (nT)", y="Photodiode Voltage (V)")
         fig2.update_traces(mode='markers+lines',line_color='red')  
         fig2.update_layout(height=150)
