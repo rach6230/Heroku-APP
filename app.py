@@ -503,7 +503,7 @@ def display_click_data(species):
         options=[
             {'label': 'V1: Systematic, Temp vs Detuning (198 sample, 29-11-21)', 'value': 26},
             {'label': 'V1: Systematic, PID Temp vs Detuning (112 sample, 02-12-21)', 'value': 27},
-            {'label': 'V1: Systematic, 3D (786 sample, 05-12-21)', 'value': 28},
+            {'label': 'V1: Systematic, 3D (1421 sample, 05-12-21)', 'value': 28},
             {'label': 'V1: Systematic, Power vs Detuning (128 sample, 07-12-21)', 'value': 29}
         ],
         value=26)     
