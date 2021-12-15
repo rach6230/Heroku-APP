@@ -8,6 +8,7 @@ import plotly.express as px
 
 ########### Define your variables
 tabtitle='SERF: Parameter Space Testing'
+########### Define your variables
 
 #### Import Fit Data
 ##v1
@@ -53,6 +54,7 @@ ALL_data_fit_values_v27 = pd.read_csv('https://raw.githubusercontent.com/rach623
 ALL_data_fit_values_v28 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/02-12-21-Full_fit_Data.csv')
 ALL_data_fit_values_v29 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/05-12-21-Full_fit_Data.csv')
 ALL_data_fit_values_v30 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/07-12-21-Full_fit_Data.csv')
+ALL_data_fit_values_v31 = pd.read_csv('https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/14-12-21-Full_fit_Data.csv')
 #ALL_data_fit_values_v = pd.read_csv('')
 
 
@@ -109,6 +111,7 @@ ALL_data_fit_values_v27["V/nT"] =  abs(ALL_data_fit_values_v27['A(1D)'])/abs(ALL
 ALL_data_fit_values_v28["V/nT"] =  (abs(ALL_data_fit_values_v28['A(1D)'])*2)/abs(ALL_data_fit_values_v28['G(1D)'])
 ALL_data_fit_values_v29["V/nT"] =  (abs(ALL_data_fit_values_v29['A(1D)'])*2)/abs(ALL_data_fit_values_v29['G(1D)'])
 ALL_data_fit_values_v30["V/nT"] =  (abs(ALL_data_fit_values_v30['A(1D)'])*2)/abs(ALL_data_fit_values_v30['G(1D)'])
+ALL_data_fit_values_v31["V/nT"] =  (abs(ALL_data_fit_values_v31['A(1D)']))/abs(ALL_data_fit_values_v31['G(1D)'])
 
 # list of all data frames
 all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, ALL_data_fit_values_v8,
@@ -117,7 +120,8 @@ all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, AL
         ALL_data_fit_values_v4, ALL_data_fit_values_v15, ALL_data_fit_values_v16, ALL_data_fit_values_v17, 
         ALL_data_fit_values_v18,ALL_data_fit_values_v19, ALL_data_fit_values_v20, ALL_data_fit_values_v21, ALL_data_fit_values_v22,
         ALL_data_fit_values_v23,ALL_data_fit_values_v24,ALL_data_fit_values_v25, ALL_data_fit_values_v26,
-        ALL_data_fit_values_v27,ALL_data_fit_values_v28,ALL_data_fit_values_v29,ALL_data_fit_values_v30]
+        ALL_data_fit_values_v27,ALL_data_fit_values_v28,ALL_data_fit_values_v29,ALL_data_fit_values_v30,
+        ALL_data_fit_values_v31]
   
 
 ## Load data for sliders/ tables
@@ -167,6 +171,7 @@ Github_urls_v27 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_a
 Github_urls_v28 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/02-12-21_Github_urls_sorted.csv")
 Github_urls_v29 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/05-12-21_Github_urls_sorted.csv")
 Github_urls_v30 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/07-12-21_Github_urls_sorted.csv")
+Github_urls_v31 = pd.read_csv("https://raw.githubusercontent.com/rach6230/Dash_app_V2/main/Data/Fit_and_Link_References/14-12-21_Github_urls_sorted.csv")
 #Github_urls_v = pd.read_csv("")
 
 # list of all data frames
@@ -175,7 +180,7 @@ all_git_df=[Github_urls_v5, Github_urls_v6, Github_urls_v7, Github_urls_v8,Githu
             Github_urls_v1, Github_urls_v2, Github_urls_v3, Github_urls_v4, Github_urls_v15, Github_urls_v16,
             Github_urls_v17,Github_urls_v18, Github_urls_v19, Github_urls_v20, Github_urls_v21, Github_urls_v22,
             Github_urls_v23,Github_urls_v24,Github_urls_v25,Github_urls_v26,Github_urls_v27,
-            Github_urls_v28, Github_urls_v29,Github_urls_v30]
+            Github_urls_v28, Github_urls_v29,Github_urls_v30,Github_urls_v31 ]
 
 
 # Inital data to show (selected point)
@@ -200,6 +205,7 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.title=tabtitle
+
 
 ########### Set up the layout
 app.layout = html.Div(children=[
@@ -356,7 +362,15 @@ app.layout = html.Div(children=[
                                              value='Linear',
                                              inputStyle={"margin-left": "20px"}, # add space between radio items
                                              labelStyle={'display': 'inline-block'},
-                                             style={'fontSize': 12}),                                          
+                                             style={'fontSize': 12}),  
+                                         html.P('colour-axis scale'),
+                                         dcc.RadioItems(
+                                             id='colour-axis-scale-radio',
+                                             options=[{"label": i, "value": i} for i in ["Linear", "Log"]],
+                                             value='Linear',
+                                             inputStyle={"margin-left": "20px"}, # add space between radio items
+                                             labelStyle={'display': 'inline-block'},
+                                             style={'fontSize': 12}),                                           
                                      ]
                                     )
                       ]
@@ -372,7 +386,7 @@ app.layout = html.Div(children=[
 def update_figure(data_version):
   if data_version == 0 or data_version == 1 or data_version ==2 or data_version ==3 or data_version == 4 or data_version ==5 or data_version == 10 or data_version == 11 or data_version == 12 or data_version == 13 :        
     A = 'Scan Type = 3D'
-  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17 or data_version == 25 or data_version == 18 or data_version == 19 or data_version == 20 or data_version == 21 or data_version == 22 or data_version == 23 or data_version == 24 or data_version == 26  or data_version == 27  or data_version == 28 or data_version == 29 :  
+  if data_version ==6 or data_version == 7 or data_version == 8 or data_version == 9 or data_version == 14 or data_version == 15 or data_version == 16 or data_version == 17 or data_version == 25 or data_version == 18 or data_version == 19 or data_version == 20 or data_version == 21 or data_version == 22 or data_version == 23 or data_version == 24 or data_version == 26  or data_version == 27  or data_version == 28 or data_version == 29 or data_version == 30:  
     A = 'Scan Type = 2D/1D'
   return A
 
@@ -424,7 +438,7 @@ def display_click_data(data_version, scan_type):
   if scan_type == 'Scan Type = 3D':
     O = [{"label": i, "value": i} for i in df2.columns[0:21]]
   if scan_type == 'Scan Type = 2D/1D': 
-    O = [{"label": i, "value": i} for i in df2.columns[0:27]]+[{"label": i, "value": i} for i in df2.columns[28:29]] 
+    O = [{"label": i, "value": i} for i in df2.columns[0:27]]+[{"label": i, "value": i} for i in df2.columns[27:31]] 
   A =  dcc.Dropdown(id='x_value_dropdown',
                       options=O,
                       value='V/nT',
@@ -439,7 +453,7 @@ def display_click_data(data_version, scan_type):
   if scan_type == 'Scan Type = 3D':
     O = [{"label": i, "value": i} for i in df2.columns[0:21]]
   if scan_type == 'Scan Type = 2D/1D': 
-    O = [{"label": i, "value": i} for i in df2.columns[0:27]]+[{"label": i, "value": i} for i in df2.columns[28:29]] 
+    O = [{"label": i, "value": i} for i in df2.columns[0:27]]+[{"label": i, "value": i} for i in df2.columns[27:31]] 
   A =  dcc.Dropdown(id='y_value_dropdown',
                       options=O,
                       value='V/nT',
@@ -504,7 +518,8 @@ def display_click_data(species):
             {'label': 'V1: Systematic, Temp vs Detuning (198 sample, 29-11-21)', 'value': 26},
             {'label': 'V1: Systematic, PID Temp vs Detuning (112 sample, 02-12-21)', 'value': 27},
             {'label': 'V1: Systematic, 3D (1451 sample, 05-12-21)', 'value': 28},
-            {'label': 'V1: Systematic, Power vs Detuning (128 sample, 07-12-21)', 'value': 29}
+            {'label': 'V1: Systematic, Power vs Detuning (128 sample, 07-12-21)', 'value': 29},
+            {'label': 'V1: M-LOOP (85 sample, 14-12-21)', 'value': 30}     
         ],
         value=26)     
   return A
@@ -823,10 +838,11 @@ def display_click_data(data_version, scan_type):
               Input('A_max', 'value'),
               Input('HanleScanType', 'children'),
               Input('x-axis-scale-radio', 'value'),
-              Input('y-axis-scale-radio', 'value'),)
+              Input('y-axis-scale-radio', 'value'),
+              Input('colour-axis-scale-radio', 'value'),)
 def update_figure(TEMP, LP, VnT_min, VnT_max, LD, data_version, x_value, y_value, z_value, G1_min, G1_max,
                   G2_min, G2_max, #G1_error_min, G1_error_max, G2_error_min, G2_error_max,
-                  A_min, A_max, scan_type, x_scale, y_scale):
+                  A_min, A_max, scan_type, x_scale, y_scale, col_scale):
   df2 = all_df[data_version]   
   if scan_type == 'Scan Type = 3D':        
     temp='Temp'
@@ -854,21 +870,25 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, data_version, x_value, y_value
   if x_scale == "Log":
         XLOG = True
   if y_scale == "Log":
-        YLOG = True        
+        YLOG = True  
   if x_scale == "Linear":
         XLOG = False
   if y_scale == "Linear":
-        YLOG = False         
+        YLOG = False  
 
-  #filtered_df.columns = ['G1', 'G2', 'C (nT)', 'A (V)', 'Bx (nT)', 'By (nT)', 'Bz (nT)', 'Error_G1', 'Error_G2',
-  #                       'Error_C', 'Error_A', 'Error_Bx', 'Error_By', 'Error_Bz', 'MSE',
-  #                       'Laser Power (μW)', 'Laser Detuning (GHz)', 'Temperature (°C)', 'PP', 'V/nT', 'SE']
-  if z_value =="":
-        fig = px.scatter(filtered_df, y=y_value, x=x_value, log_x=XLOG, log_y=YLOG)
-  if z_value !="":
-    fig = px.scatter(filtered_df, y=y_value, x=x_value, color=z_value, log_x=XLOG, log_y=YLOG)
+  if col_scale == "Log":
+      if z_value =="":
+            fig = px.scatter(filtered_df, y=y_value, x=x_value, log_x=XLOG, log_y=YLOG)
+      if z_value !="":
+        fig = px.scatter(filtered_df, y=y_value, x=x_value, color=np.log10(z_value), log_x=XLOG, log_y=YLOG)
+  if col_scale == "Linear":
+      if z_value =="":
+            fig = px.scatter(filtered_df, y=y_value, x=x_value, log_x=XLOG, log_y=YLOG)
+      if z_value !="":
+        fig = px.scatter(filtered_df, y=y_value, x=x_value, color=z_value, log_x=XLOG, log_y=YLOG)        
   fig.update_layout(margin={'l': 0, 'b': 0, 't': 30, 'r': 0}, hovermode='closest')
   fig.update_layout(height=300)  
+    
   return fig
 ######## Call backs for sensitivity plot ################
 @app.callback(
@@ -878,7 +898,7 @@ def update_figure(TEMP, LP, VnT_min, VnT_max, LD, data_version, x_value, y_value
 def update_figure(scan_type, data_version):
     if scan_type == 'Scan Type = 2D/1D': 
         # Includes sensitivity data
-        if data_version== 14 or data_version== 15 or data_version== 16 or data_version== 17 or data_version== 18 or data_version== 19 or data_version== 20 or data_version== 21 or data_version== 22 or data_version== 23 or data_version== 24 or data_version == 26 or data_version == 29: 
+        if data_version== 14 or data_version== 15 or data_version== 16 or data_version== 17 or data_version== 18 or data_version== 19 or data_version== 20 or data_version== 21 or data_version== 22 or data_version== 23 or data_version== 24 or data_version == 26 or data_version == 29 or data_version == 30: 
             A = dcc.RadioItems(
                 id='value_dropdown_1D_sensitivity',
                 options=[{"label": i, "value": i} for i in ["Hanle Single Axis", "Sensitivity"]],
@@ -1002,7 +1022,7 @@ def update_figure(clickData, data_version, scan_type):
             df =df.iloc[1:]
             df.reset_index(drop=True, inplace=True)   
             df.columns = ["a","b","a2","gg","f", "Frequency (Hz)", "Photodiode Voltage (V)", "c","d", "e"]  
-        if  data_version ==20 or data_version ==21 or data_version ==22 or data_version ==23 or data_version== 24 or data_version == 26 or data_version == 27 or data_version == 28 or data_version == 29:
+        if  data_version ==20 or data_version ==21 or data_version ==22 or data_version ==23 or data_version== 24 or data_version == 26 or data_version == 27 or data_version == 28 or data_version == 29 or data_version == 30:
             df.columns = df.iloc[0]
             df =df.iloc[1:]
             df.reset_index(drop=True, inplace=True)   
@@ -1482,7 +1502,7 @@ def update_figure(clickData, data_version, scan_type):
         df =df.iloc[1:]
         if data_version == 14 or data_version == 15 or data_version ==16 or data_version ==17 or data_version == 25 or data_version ==18 or data_version ==19: 
             df_2d = df.iloc[0:960, 0:3] #2D data 
-        if data_version == 20 or data_version == 21 or data_version == 22 or data_version ==23 or data_version== 24 or data_version == 26 or data_version == 27 or data_version == 28 or data_version == 29: 
+        if data_version == 20 or data_version == 21 or data_version == 22 or data_version ==23 or data_version== 24 or data_version == 26 or data_version == 27 or data_version == 28 or data_version == 29 or data_version == 30: 
             df_2d = df.iloc[0:2500, 0:3] #2D data                   
         else :
             df_2d = df.iloc[0:441, 0:3] #2D data       
@@ -1533,7 +1553,7 @@ def update_figure(clickData, data_version, scan_type):
             df_1d = df_1d.rename(columns={"Photodiode Voltage (V)" : "Y  Field (nT)","Frequency (Hz)" : "Photodiode Voltage (V)"})
         if data_version ==15 or data_version ==16 or data_version ==17 or data_version ==18 or data_version ==19 or data_version == 25:
             df_1d = df.iloc[0:100, 3:5] # 3D data  
-        if data_version ==20 or data_version ==21 or data_version ==22 or data_version ==23 or data_version== 24 or data_version == 26 or data_version == 27 or data_version == 28 or data_version == 29:
+        if data_version ==20 or data_version ==21 or data_version ==22 or data_version ==23 or data_version== 24 or data_version == 26 or data_version == 27 or data_version == 28 or data_version == 29 or data_version == 30:
             df_1d = df.iloc[0:200, 3:5] # 3D data             
         else:
             df_1d = df.iloc[0:51, 4:6] # 3D data
