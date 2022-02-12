@@ -116,11 +116,11 @@ ALL_data_fit_values_v27["V/nT"] =  abs(ALL_data_fit_values_v27['A(1D)'])/abs(ALL
 ALL_data_fit_values_v28["V/nT"] =  (abs(ALL_data_fit_values_v28['A(1D)'])*2)/abs(ALL_data_fit_values_v28['G(1D)'])
 ALL_data_fit_values_v29["V/nT"] =  (abs(ALL_data_fit_values_v29['A(1D)'])*2)/abs(ALL_data_fit_values_v29['G(1D)'])
 ALL_data_fit_values_v30["V/nT"] =  (abs(ALL_data_fit_values_v30['A(1D)'])*2)/abs(ALL_data_fit_values_v30['G(1D)'])
-ALL_data_fit_values_v31["V/nT"] =  (abs(ALL_data_fit_values_v31['A(1D)']))/abs(ALL_data_fit_values_v31['G(1D)'])
-ALL_data_fit_values_v32["V/nT"] =  (abs(ALL_data_fit_values_v32['A(1D)']))/abs(ALL_data_fit_values_v32['G(1D)'])
-ALL_data_fit_values_v33["V/nT"] =  (abs(ALL_data_fit_values_v33['A(1D)']))/abs(ALL_data_fit_values_v33['G(1D)'])
-ALL_data_fit_values_v34["V/nT"] =  (abs(ALL_data_fit_values_v34['A(1D)']))/abs(ALL_data_fit_values_v34['G(1D)'])
-ALL_data_fit_values_v35["V/nT"] =  (abs(ALL_data_fit_values_v35['A(1D)']))/abs(ALL_data_fit_values_v35['G(1D)'])
+ALL_data_fit_values_v31["V/nT"] =  ALL_data_fit_values_v31[`Hanle (V/nT)`] 
+ALL_data_fit_values_v32["V/nT"] =  ALL_data_fit_values_v32[`Hanle (V/nT)`] 
+ALL_data_fit_values_v33["V/nT"] =  ALL_data_fit_values_v33[`Hanle (V/nT)`] 
+ALL_data_fit_values_v34["V/nT"] =  ALL_data_fit_values_v34[`Hanle (V/nT)`] 
+ALL_data_fit_values_v35["V/nT"] =  ALL_data_fit_values_v35[`Hanle (V/nT)`] 
 
 # list of all data frames
 all_df=[ALL_data_fit_values_v5,ALL_data_fit_values_v6,ALL_data_fit_values_v7, ALL_data_fit_values_v8,
